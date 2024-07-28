@@ -31,10 +31,10 @@ public class UserVerifyController extends UserMain {
         return this;
     }
 
-    public UserVerifyController verifyRoomIsExistWithType(String expectedRoomType) {
+    public UserVerifyController verifyRoomIsExistWithType(String expectedRoomType) throws Exception {
         int roomsCount = page.getElementsCountBy(roomsList);
         if (roomsCount > 0) {
-            String actualRoomType = page.getLastElementText(getVisibleRoomType(roomsCount));
+            String actualRoomType = page.getText(getVisibleRoomType(roomsCount));
             Assert.assertEquals(actualRoomType, expectedRoomType, "Room Type is not matching expected Type");
 
         }

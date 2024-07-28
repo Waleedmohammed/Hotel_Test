@@ -14,6 +14,7 @@ import hotel.qa.test.core.factory.PageManager;
 import hotel.qa.test.pages.admin.common.AdminHeader;
 import hotel.qa.test.pages.admin.login.AdminLogin;
 import hotel.qa.test.pages.admin.main.AdminMain;
+import hotel.qa.test.pages.admin.room.AdminRoom;
 import hotel.qa.test.pages.users.main.UserMain;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.TestInstance;
@@ -54,6 +55,9 @@ public abstract class TestBase extends AbstractTestNGSpringContextTests {
     protected AdminMain adminMain;
 
     protected UserMain userMain;
+
+    protected AdminRoom adminRoom;
+
     Browser.NewContextOptions contextOptions;
     public static ExtentTest logger;
     public static ExtentReports report;

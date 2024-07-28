@@ -9,8 +9,8 @@ public class MainVerifyController extends AdminMain {
         super(page);
     }
 
-    public MainVerifyController verifyErrorMessageDisplayed(String expectedErrorMessage) {
-        Assert.assertEquals(page.getLastElementText(errorMessage), expectedErrorMessage, "Expected Error Message doesn't match Actual Message");
+    public MainVerifyController verifyErrorMessageDisplayed(String expectedErrorMessage) throws Exception {
+        Assert.assertEquals(page.getText(errorMessage), expectedErrorMessage, "Expected Error Message doesn't match Actual Message");
         return this;
     }
 }

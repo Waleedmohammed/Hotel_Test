@@ -339,11 +339,6 @@ public abstract class BasePage {
         return attributeValues;
     }
 
-    public String getLastElementText(String locator) {
-        String elementText = page.locator(locator).textContent();
-        log.info("Element located by {} has text {}", locator, elementText);
-        return elementText;
-    }
 
     public List<String> getAllAvailableOptionsFromUl(String ulLocator) {
 
@@ -361,6 +356,13 @@ public abstract class BasePage {
             log.info("There is not available Options for that given Room ");
             return null;
         }
+    }
+
+    public Locator getLastElementWith(String locator) {
+        int count = page.locator(locator).count();
+        log.info("Returning Last element located by {} From {} elements", locator, count);
+        return page.locator(locator).last();
+
     }
 
 }

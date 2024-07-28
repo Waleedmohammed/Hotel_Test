@@ -76,5 +76,10 @@ public class MainActController extends AdminMain {
         return this;
     }
 
+    public MainActController clickOnCreatedRoom() throws Exception {
+        page.getLastElementWith(roomsList).click();
+        return this;
+    }
+
 
 }
