@@ -12,7 +12,6 @@ public class AppProperties {
     private String adminUrl;
     private String adminUser;
     private String adminPassword;
-    private String appTitle;
     private String mainUrl;
 
 }

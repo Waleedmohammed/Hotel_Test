@@ -11,4 +11,5 @@ public class TestProperties {
 
     private String errorRoomNumber;
     private String errorRoomPrice;
+    private String appTitle;
 }

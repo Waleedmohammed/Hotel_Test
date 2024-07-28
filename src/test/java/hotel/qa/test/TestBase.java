@@ -118,7 +118,7 @@ public abstract class TestBase extends AbstractTestNGSpringContextTests {
         basePage.navigate(appProperties.getAdminUrl());
 
         adminLogin.verify()
-                .verifyAdminPageTitle(appProperties.getAppTitle());
+                .verifyAdminPageTitle(testProperties.getAppTitle());
 
         adminLogin.act()
                 .login(appProperties.getAdminUser(), appProperties.getAdminPassword());

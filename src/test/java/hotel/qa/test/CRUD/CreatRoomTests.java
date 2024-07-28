@@ -37,7 +37,7 @@ public class CreatRoomTests extends TestBase {
                 .login(appProperties.getAdminUser(), appProperties.getAdminPassword());
 
         adminLogin.verify()
-                .verifyAdminPageTitle(appProperties.getAppTitle());
+                .verifyAdminPageTitle(testProperties.getAppTitle());
 
         adminHeader.verify()
                 .verifyHeaderElementsIsVisible();
@@ -86,7 +86,7 @@ public class CreatRoomTests extends TestBase {
                 .login(appProperties.getAdminUser(), appProperties.getAdminPassword());
 
         adminLogin.verify()
-                .verifyAdminPageTitle(appProperties.getAppTitle());
+                .verifyAdminPageTitle(testProperties.getAppTitle());
 
         adminHeader.verify()
                 .verifyHeaderElementsIsVisible();
@@ -119,7 +119,7 @@ public class CreatRoomTests extends TestBase {
                 .login(appProperties.getAdminUser(), appProperties.getAdminPassword());
 
         adminLogin.verify()
-                .verifyAdminPageTitle(appProperties.getAppTitle());
+                .verifyAdminPageTitle(testProperties.getAppTitle());
 
         adminHeader.verify()
                 .verifyHeaderElementsIsVisible();
