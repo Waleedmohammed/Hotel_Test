@@ -3,6 +3,7 @@ package hotel.qa.test.pages.users.main;
 import hotel.qa.test.core.factory.BasePage;
 import hotel.qa.test.helper.TestHelpers;
 import hotel.qa.test.pages.admin.login.LoginVerifyController;
+import hotel.qa.test.utils.SelectedRoomOptions;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.Assert;
 import org.testng.asserts.Assertion;
@@ -41,13 +42,11 @@ public class UserVerifyController extends UserMain {
         return this;
     }
 
-    public UserVerifyController verifyRoomIsExistWithOptions(List<String> expectedOptions) {
+    public UserVerifyController verifyRoomIsExistWithSelectedOptions() {
         int roomsCount = page.getElementsCountBy(roomsList);
         if (roomsCount > 0) {
             List<String> actualRoomOptions = page.getAllAvailableOptionsFromUl(getVisibleRoomOptions(roomsCount));
-            Set<String> set1 = new HashSet<>(actualRoomOptions);
-            Set<String> set2 = new HashSet<>(expectedOptions);
-            Assert.assertTrue(set1.containsAll(set2),"Room Options actual results don't match the expected Options");
+            Assert.assertTrue(actualRoomOptions.containsAll(SelectedRoomOptions.getInstance().getItems()),"Room Options actual results don't match the expected Options");
         }
         return this;
     }

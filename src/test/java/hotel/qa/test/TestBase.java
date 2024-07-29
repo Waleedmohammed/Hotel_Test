@@ -84,8 +84,11 @@ public abstract class TestBase extends AbstractTestNGSpringContextTests {
             System.setProperty("java.awt.headless", "false");
         }
         contextOptions = new Browser.NewContextOptions()
-                .setAcceptDownloads(true)
-                .setViewportSize((int) getCurrentScreenDimension().getWidth(), (int) getCurrentScreenDimension().getHeight());
+                .setAcceptDownloads(browserProperties.isAcceptDownloads());
+        if (browserProperties.isMaximize()) {
+            contextOptions.setViewportSize((int) getCurrentScreenDimension().getWidth(), (int) getCurrentScreenDimension().getHeight());
+
+        }
         logger = report.createTest(method.getName());
         basePage = pageManager.getPage();
         basePage.start(contextOptions);

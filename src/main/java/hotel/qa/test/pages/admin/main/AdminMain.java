@@ -5,6 +5,9 @@ import com.microsoft.playwright.Locator;
 import hotel.qa.test.core.factory.BasePage;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 public class
 AdminMain {
@@ -13,6 +16,7 @@ AdminMain {
 
     protected BasePage page;
     protected int roomListCount;
+    protected List<String> selectedRoomOptions = new ArrayList<>();
 
     AdminMain(BasePage page) {
         this.page = page;

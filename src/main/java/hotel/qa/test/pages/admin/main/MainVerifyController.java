@@ -1,6 +1,7 @@
 package hotel.qa.test.pages.admin.main;
 
 import hotel.qa.test.core.factory.BasePage;
+import hotel.qa.test.utils.SelectedRoomOptions;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.Assert;
 
@@ -17,7 +18,7 @@ public class MainVerifyController extends AdminMain {
     }
 
 
-    public MainVerifyController verifyCreatedRoomIsVisible(String expectedRoomNumber,String expectedRoomType,String expectedRoomAccessible, String expectedRoomPrice, List<String> expectedRoomDetails) {
+    public MainVerifyController verifyCreatedRoomIsVisible(String expectedRoomNumber,String expectedRoomType,String expectedRoomAccessible, String expectedRoomPrice) {
 
         String roomId = getRoomSystemId(expectedRoomNumber);
 
@@ -27,11 +28,12 @@ public class MainVerifyController extends AdminMain {
                 .toList();
 
         log.info("Room ID in system is "+roomId);
+
         Assert.assertEquals(page.getElementLocatedBy(getRoomNumberLbl(expectedRoomNumber)).textContent(), expectedRoomNumber, "Room Number is not matching expected number");
         Assert.assertEquals(page.getElementLocatedBy(getRoomTypeLbl(roomId)).first().textContent(), expectedRoomType, "Room Type is not matching expected Type");
         Assert.assertEquals(page.getElementLocatedBy(getRoomAccessibleLbl(roomId)).nth(1).textContent(), expectedRoomAccessible, "Room Accessible is not matching expected Accessible");
         Assert.assertEquals(page.getElementLocatedBy(getRoomPriceLbl(expectedRoomPrice)).textContent(), expectedRoomPrice, "Room Price is not matching expected Price");
-        Assert.assertTrue(expectedRoomDetails.containsAll(optionsItems),"Room Price is not matching expected Price");
+        Assert.assertTrue(optionsItems.containsAll(SelectedRoomOptions.getInstance().getItems()),"Room Price is not matching expected Price");
 
         return this;
     }

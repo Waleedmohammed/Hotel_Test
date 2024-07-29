@@ -2,6 +2,8 @@ package hotel.qa.test.pages.admin.main;
 
 import com.microsoft.playwright.Locator;
 import hotel.qa.test.core.factory.BasePage;
+import hotel.qa.test.utils.RoomOptions;
+import hotel.qa.test.utils.SelectedRoomOptions;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.TimeUnit;
@@ -50,31 +52,37 @@ public class MainActController extends AdminMain {
 
     public MainActController checkWifiCheckBox() throws Exception {
         page.check(wifiChBox);
+        SelectedRoomOptions.getInstance().addItem(RoomOptions.WIFI.getRoomOption());
         return this;
     }
 
     public MainActController checkRefreshmentCheckBox() throws Exception {
         page.check(refreshmentChBox);
+        SelectedRoomOptions.getInstance().addItem(RoomOptions.REFRESHMENTS.getRoomOption());
         return this;
     }
 
     public MainActController checkTvCheckBox() throws Exception {
         page.check(tvChBox);
+        SelectedRoomOptions.getInstance().addItem(RoomOptions.TV.getRoomOption());
         return this;
     }
 
     public MainActController checkSafeCheckBox() throws Exception {
         page.check(safeChBox);
+        SelectedRoomOptions.getInstance().addItem(RoomOptions.SAFE.getRoomOption());
         return this;
     }
 
     public MainActController checkRadioCheckBox() throws Exception {
         page.check(radioChBox);
+        SelectedRoomOptions.getInstance().addItem(RoomOptions.RADIO.getRoomOption());
         return this;
     }
 
     public MainActController checkViewsCheckBox() throws Exception {
         page.check(viewsChBox);
+        SelectedRoomOptions.getInstance().addItem(RoomOptions.VIEWS.getRoomOption());
         return this;
     }
 
@@ -89,9 +97,6 @@ public class MainActController extends AdminMain {
     }
 
     public MainActController clickDeleteRoomIcon(String roomNumber) throws Exception {
-//        getRoomSystemId(roomNumber)
-//        Locator roomNumberElement = page.getElementLocatedBy(getRoomNumberLbl(roomNumber));
-//        String roomNumberId = roomNumberElement.locator("..").locator("..").getAttribute("id").substring(4);
         page.clickOn(getDeleteRoomIcon(getRoomSystemId(roomNumber)));
         return this;
     }

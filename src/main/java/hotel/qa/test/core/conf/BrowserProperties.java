@@ -15,6 +15,8 @@ public class BrowserProperties {
     private boolean DriverService;
     private boolean GetConsoleLog;
     private boolean Maximize;
+    private boolean acceptDownloads;
+
     private String pageLoadingStrategy;
     private long implicitlyWait;
     private long explicitlyWait;
