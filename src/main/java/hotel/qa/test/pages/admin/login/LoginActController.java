@@ -35,7 +35,6 @@ public class LoginActController extends AdminLogin {
 
     public void clickLoginBtn() throws Exception {
         page.clickOn(loginBtn);
-        //page.waitForSelector(createRoomBtn);
     }
 
 }

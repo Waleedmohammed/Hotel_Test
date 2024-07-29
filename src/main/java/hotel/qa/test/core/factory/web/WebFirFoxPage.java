@@ -19,7 +19,9 @@ public class WebFirFoxPage extends BasePage {
     @Override
     protected Page init(Browser.NewContextOptions context) {
         tlPlaywright.set(Playwright.create());
-        tlBrowser.set(getPlaywright().firefox().launch(new BrowserType.LaunchOptions().setHeadless(browserConfig.isHeadless())));
+        tlBrowser.set(getPlaywright().firefox().launch(new BrowserType.LaunchOptions()
+                .setHeadless(browserConfig.isHeadless())));
+                //.setSlowMo(browserConfig.getSlowMotionMs())));
         if (context != null) {
             tlBrowserContext.set(getBrowser().newContext(context));
         } else {

@@ -11,6 +11,7 @@ public class BrowserProperties {
 
     private String name;
     private boolean Headless;
+    private int SlowMotionMs;
     private boolean DriverService;
     private boolean GetConsoleLog;
     private boolean Maximize;

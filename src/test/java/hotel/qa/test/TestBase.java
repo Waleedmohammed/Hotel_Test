@@ -11,6 +11,7 @@ import hotel.qa.test.core.conf.BrowserProperties;
 import hotel.qa.test.core.conf.TestProperties;
 import hotel.qa.test.core.factory.BasePage;
 import hotel.qa.test.core.factory.PageManager;
+import hotel.qa.test.helper.TestHelpers;
 import hotel.qa.test.pages.admin.common.AdminHeader;
 import hotel.qa.test.pages.admin.login.AdminLogin;
 import hotel.qa.test.pages.admin.main.AdminMain;
@@ -76,6 +77,8 @@ public abstract class TestBase extends AbstractTestNGSpringContextTests {
 
     @BeforeMethod
     public void setUp(Method method) {
+        roomNumber = TestHelpers.getRandomNumeric(3);
+        roomPrice = TestHelpers.getRandomNumeric(3);
         // Because we are using Toolkit.getDefaultToolkit().getScreenSize() which is not supporting headless mode
         if (!browserProperties.isHeadless()) {
             System.setProperty("java.awt.headless", "false");
@@ -86,6 +89,7 @@ public abstract class TestBase extends AbstractTestNGSpringContextTests {
         logger = report.createTest(method.getName());
         basePage = pageManager.getPage();
         basePage.start(contextOptions);
+        basePage.navigate(appProperties.getAdminUrl());
     }
 
     // take screenshot when test case fail and add it in the Screenshot folder

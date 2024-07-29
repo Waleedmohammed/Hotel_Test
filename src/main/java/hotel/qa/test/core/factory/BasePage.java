@@ -108,7 +108,6 @@ public abstract class BasePage {
     }
 
     public void waitForSelector(String selector) {
-
         page.waitForSelector(selector);
     }
 
@@ -362,7 +361,11 @@ public abstract class BasePage {
         int count = page.locator(locator).count();
         log.info("Returning Last element located by {} From {} elements", locator, count);
         return page.locator(locator).last();
+    }
 
+    public Locator getElementLocatedBy(String locator) {
+        log.info("Returning element located by {}", locator);
+        return page.locator(locator);
     }
 
 }

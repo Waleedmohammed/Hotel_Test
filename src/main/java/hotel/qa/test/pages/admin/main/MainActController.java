@@ -1,7 +1,13 @@
 package hotel.qa.test.pages.admin.main;
 
+import com.microsoft.playwright.Locator;
 import hotel.qa.test.core.factory.BasePage;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.concurrent.TimeUnit;
+
+import static org.awaitility.Awaitility.await;
+
 
 @Slf4j
 public class MainActController extends AdminMain {
@@ -11,7 +17,8 @@ public class MainActController extends AdminMain {
     }
 
     public MainActController getCurrentRoomsList() throws Exception {
-        page.waitForSelector(wifiChBox);
+        await().atMost(10, TimeUnit.SECONDS).until(() -> page.getElementLocatedBy(wifiChBox).isVisible());
+
         roomListCount = page.getElementsCountBy(roomsList);
         log.info("Current room list Count is {}", roomListCount);
         return this;
@@ -78,6 +85,13 @@ public class MainActController extends AdminMain {
 
     public MainActController clickOnCreatedRoom() throws Exception {
         page.getLastElementWith(roomsList).click();
+        return this;
+    }
+
+    public MainActController clickDeleteRoomIcon(String roomNumber) throws Exception {
+        Locator roomNumberElement = page.getElementLocatedBy(getRoomNumberLbl(roomNumber));
+        String roomNumberId = roomNumberElement.locator("..").locator("..").getAttribute("id").substring(4);
+        page.clickOn(getDeleteRoomIcon(roomNumberId));
         return this;
     }
 

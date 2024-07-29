@@ -23,15 +23,10 @@ public class CreatRoomTests extends TestBase {
     @Test
     public void test_create_room_by_admin() throws Exception {
 
-        basePage.navigate(appProperties.getAdminUrl());
-
         adminLogin = getLogin(basePage);
         adminHeader = getHeader(basePage);
         adminMain = getMain(basePage);
         userMain = getUserMain(basePage);
-
-        roomNumber = TestHelpers.getRandomNumeric(3);
-        roomPrice = TestHelpers.getRandomNumeric(3);
 
         adminLogin.act()
                 .login(appProperties.getAdminUser(), appProperties.getAdminPassword());
@@ -52,35 +47,24 @@ public class CreatRoomTests extends TestBase {
                 .checkRefreshmentCheckBox()
                 .clickCreateRoomButton();
 
-
-        basePage.navigate(appProperties.getMainUrl());
-
-        userMain.act()
-                .waitForHotelLogoLoad()
-                .getListOfVisibleRooms();
-
-
         List<String> expectedRoomOptions = new ArrayList<>();
         expectedRoomOptions.add(RoomOptions.RADIO.getRoomOption());
         expectedRoomOptions.add(RoomOptions.TV.getRoomOption());
         expectedRoomOptions.add(RoomOptions.REFRESHMENTS.getRoomOption());
-        userMain.verify()
-                .verifyRoomIsExistWithRoomNumber(roomNumber)
-                .verifyRoomIsExistWithType(RoomType.FAMILY.getRoomType())
-                .verifyRoomIsExistWithOptions(expectedRoomOptions);
 
-
+        adminMain.verify()
+                .verifyCreatedRoomIsVisible(roomNumber,
+                        RoomType.FAMILY.getRoomType(),
+                        RoomAccessible.FALSE.getRoomAccessible(),
+                        roomPrice, expectedRoomOptions);
     }
 
     @Test
     public void test_create_room_without_number() throws Exception {
-        basePage.navigate(appProperties.getAdminUrl());
 
         adminLogin = getLogin(basePage);
         adminHeader = getHeader(basePage);
         adminMain = getMain(basePage);
-
-        roomPrice = TestHelpers.getRandomNumeric(3);
 
         adminLogin.act()
                 .login(appProperties.getAdminUser(), appProperties.getAdminPassword());
@@ -107,13 +91,10 @@ public class CreatRoomTests extends TestBase {
 
     @Test
     public void test_create_room_without_price() throws Exception {
-        basePage.navigate(appProperties.getAdminUrl());
 
         adminLogin = getLogin(basePage);
         adminHeader = getHeader(basePage);
         adminMain = getMain(basePage);
-
-        roomNumber = TestHelpers.getRandomNumeric(3);
 
         adminLogin.act()
                 .login(appProperties.getAdminUser(), appProperties.getAdminPassword());

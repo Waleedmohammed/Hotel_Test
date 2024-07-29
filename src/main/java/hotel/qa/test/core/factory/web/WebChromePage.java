@@ -20,7 +20,9 @@ public class WebChromePage extends BasePage {
     protected Page init(Browser.NewContextOptions context) {
 
         tlPlaywright.set(Playwright.create());
-        tlBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setHeadless(browserConfig.isHeadless())));
+        tlBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions()
+                .setHeadless(browserConfig.isHeadless())));
+                //.setSlowMo(browserConfig.getSlowMotionMs())));
         if (context != null) {
             tlBrowserContext.set(getBrowser().newContext(context));
         }else {
