@@ -25,4 +25,8 @@ public class SelectedRoomOptions {
     public List<String> getItems() {
         return roomOptions;
     }
+
+    public void clear() {
+        roomOptions.clear();
+    }
 }

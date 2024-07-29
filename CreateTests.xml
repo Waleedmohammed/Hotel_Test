@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Create Room Test Suite" parallel="tests" thread-count="6">
+
+    <test  name="Create Tests">
+        <classes>
+            <class name="hotel.qa.test.CRUD.CreatRoomTests"/>
+        </classes>
+    </test>
+</suite>

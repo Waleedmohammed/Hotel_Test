@@ -26,6 +26,9 @@ public class UpdateTests extends TestBase {
 
         performAdminLogin(adminLogin, adminHeader);
 
+        roomNumber = TestHelpers.getRandomNumeric(3);
+        roomPrice = TestHelpers.getRandomNumeric(3);
+
         adminMain.act()
                 .typeRoomNumber(roomNumber)
                 .selectRoomType(RoomType.FAMILY.getRoomType())
@@ -48,15 +51,15 @@ public class UpdateTests extends TestBase {
         adminMain.act()
                 .clickOnCreatedRoom(roomNumber);
 
-        String newRoomNumber = TestHelpers.getRandomNumeric(3);
-        String newRoomPrice = TestHelpers.getRandomNumeric(3);
+        roomNumber = TestHelpers.getRandomNumeric(3);
+        roomPrice = TestHelpers.getRandomNumeric(3);
 
         adminRoom.act()
                 .clickEditButton()
-                .updateAllRoomDetails(newRoomNumber,
+                .updateAllRoomDetails(roomNumber,
                         RoomType.SUITE.getRoomType(),
                         RoomAccessible.TRUE.getRoomAccessible(),
-                        newRoomPrice,
+                        roomNumber,
                         testProperties.getNewRoomDescription(),
                         testProperties.getNewRoomUrl())
                 .clickUpdateButton();
@@ -68,9 +71,14 @@ public class UpdateTests extends TestBase {
                 .getListOfVisibleRooms();
 
         userMain.verify()
-                .verifyRoomIsExistWithRoomNumber(newRoomNumber)
+                .verifyRoomIsExistWithRoomNumber(roomNumber)
                 .verifyRoomIsExistWithType(RoomType.SUITE.getRoomType())
                 .verifyRoomIsExistWithoutOptions();
+
+        basePage.navigate(appProperties.getAdminUrl());
+
+        adminMain.act()
+                .clickDeleteRoomIcon(roomNumber);
     }
 
 
@@ -84,6 +92,10 @@ public class UpdateTests extends TestBase {
         adminRoom = getRoom(basePage);
 
         performAdminLogin(adminLogin, adminHeader);
+
+        roomNumber = TestHelpers.getRandomNumeric(3);
+        roomPrice = TestHelpers.getRandomNumeric(3);
+
 
         adminMain.act()
                 .typeRoomNumber(roomNumber)
@@ -127,6 +139,10 @@ public class UpdateTests extends TestBase {
         adminRoom = getRoom(basePage);
 
         performAdminLogin(adminLogin, adminHeader);
+
+        roomNumber = TestHelpers.getRandomNumeric(3);
+        roomPrice = TestHelpers.getRandomNumeric(3);
+
 
         adminMain.act()
                 .typeRoomNumber(roomNumber)

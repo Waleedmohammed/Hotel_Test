@@ -77,8 +77,6 @@ public abstract class TestBase extends AbstractTestNGSpringContextTests {
 
     @BeforeMethod
     public void setUp(Method method) {
-        roomNumber = TestHelpers.getRandomNumeric(3);
-        roomPrice = TestHelpers.getRandomNumeric(3);
         // Because we are using Toolkit.getDefaultToolkit().getScreenSize() which is not supporting headless mode
         if (!browserProperties.isHeadless()) {
             System.setProperty("java.awt.headless", "false");
@@ -112,6 +110,7 @@ public abstract class TestBase extends AbstractTestNGSpringContextTests {
             logger.log(Status.SKIP, method.getName());
         }
         basePage.quit();
+
     }
 
     @AfterTest

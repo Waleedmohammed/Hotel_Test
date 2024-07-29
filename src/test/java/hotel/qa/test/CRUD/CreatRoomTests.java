@@ -1,6 +1,7 @@
 package hotel.qa.test.CRUD;
 
 import hotel.qa.test.TestBase;
+import hotel.qa.test.helper.TestHelpers;
 import hotel.qa.test.utils.RoomAccessible;
 import hotel.qa.test.utils.RoomType;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,9 @@ public class CreatRoomTests extends TestBase {
         adminHeader.verify()
                 .verifyHeaderElementsIsVisible();
 
+        roomNumber = TestHelpers.getRandomNumeric(3);
+        roomPrice = TestHelpers.getRandomNumeric(3);
+
         adminMain.act()
                 .typeRoomNumber(roomNumber)
                 .selectRoomType(RoomType.FAMILY.getRoomType())
@@ -47,6 +51,9 @@ public class CreatRoomTests extends TestBase {
                         RoomType.FAMILY.getRoomType(),
                         RoomAccessible.FALSE.getRoomAccessible(),
                         roomPrice);
+
+        adminMain.act()
+                .clickDeleteRoomIcon(roomNumber);
     }
 
     @Test
@@ -64,6 +71,8 @@ public class CreatRoomTests extends TestBase {
 
         adminHeader.verify()
                 .verifyHeaderElementsIsVisible();
+
+        roomPrice = TestHelpers.getRandomNumeric(3);
 
         adminMain.act()
                 .selectRoomType(RoomType.FAMILY.getRoomType())
@@ -94,6 +103,8 @@ public class CreatRoomTests extends TestBase {
 
         adminHeader.verify()
                 .verifyHeaderElementsIsVisible();
+
+        roomNumber = TestHelpers.getRandomNumeric(3);
 
         adminMain.act()
                 .typeRoomNumber(roomNumber)

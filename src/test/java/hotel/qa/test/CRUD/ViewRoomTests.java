@@ -1,6 +1,7 @@
 package hotel.qa.test.CRUD;
 
 import hotel.qa.test.TestBase;
+import hotel.qa.test.helper.TestHelpers;
 import hotel.qa.test.utils.RoomAccessible;
 import hotel.qa.test.utils.RoomType;
 import org.testng.annotations.Test;
@@ -30,6 +31,10 @@ public class ViewRoomTests extends TestBase {
         adminHeader.verify()
                 .verifyHeaderElementsIsVisible();
 
+        roomNumber = TestHelpers.getRandomNumeric(3);
+        roomPrice = TestHelpers.getRandomNumeric(3);
+
+
         adminMain.act()
                 .typeRoomNumber(roomNumber)
                 .selectRoomType(RoomType.FAMILY.getRoomType())
@@ -50,6 +55,11 @@ public class ViewRoomTests extends TestBase {
                 .verifyRoomIsExistWithRoomNumber(roomNumber)
                 .verifyRoomIsExistWithType(RoomType.FAMILY.getRoomType())
                 .verifyRoomIsExistWithSelectedOptions();
+
+        basePage.navigate(appProperties.getAdminUrl());
+
+        adminMain.act()
+                .clickDeleteRoomIcon(roomNumber);
 
     }
 }

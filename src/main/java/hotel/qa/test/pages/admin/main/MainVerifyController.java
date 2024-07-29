@@ -33,8 +33,8 @@ public class MainVerifyController extends AdminMain {
         Assert.assertEquals(page.getElementLocatedBy(getRoomTypeLbl(roomId)).first().textContent(), expectedRoomType, "Room Type is not matching expected Type");
         Assert.assertEquals(page.getElementLocatedBy(getRoomAccessibleLbl(roomId)).nth(1).textContent(), expectedRoomAccessible, "Room Accessible is not matching expected Accessible");
         Assert.assertEquals(page.getElementLocatedBy(getRoomPriceLbl(expectedRoomPrice)).textContent(), expectedRoomPrice, "Room Price is not matching expected Price");
-        Assert.assertTrue(optionsItems.containsAll(SelectedRoomOptions.getInstance().getItems()),"Room Price is not matching expected Price");
-
+        Assert.assertTrue(optionsItems.containsAll(SelectedRoomOptions.getInstance().getItems()),"Room Options is not matching expected Options");
+        SelectedRoomOptions.getInstance().clear();
         return this;
     }
 

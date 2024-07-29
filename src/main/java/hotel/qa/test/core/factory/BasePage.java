@@ -61,7 +61,13 @@ public abstract class BasePage {
 
     public void quit() {
         if (page != null) {
-            page.context().close();
+            getPage().close();
+            //page.close();
+            //page.context().close();
+            getBrowserContext().close();
+            //page.context().browser().close()
+            //page.context();
+            getPlaywright().close();
             log.info("Page context closed");
         }
     }
