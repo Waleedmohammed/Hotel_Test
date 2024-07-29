@@ -42,12 +42,6 @@ public class UpdateTests extends TestBase {
                 .checkSafeCheckBox()
                 .clickCreateRoomButton();
 
-        basePage.navigate(appProperties.getMainUrl());
-
-        userMain.act()
-                .waitForHotelLogoLoad()
-                .getListOfVisibleRooms();
-
         List<String> expectedRoomOptions = new ArrayList<>();
         expectedRoomOptions.add(RoomOptions.RADIO.getRoomOption());
         expectedRoomOptions.add(RoomOptions.TV.getRoomOption());
@@ -56,27 +50,39 @@ public class UpdateTests extends TestBase {
         expectedRoomOptions.add(RoomOptions.VIEWS.getRoomOption());
         expectedRoomOptions.add(RoomOptions.SAFE.getRoomOption());
 
-        userMain.verify()
-                .verifyRoomIsExistWithRoomNumber(roomNumber)
-                .verifyRoomIsExistWithType(RoomType.FAMILY.getRoomType())
-                .verifyRoomIsExistWithOptions(expectedRoomOptions);
-
-        basePage.navigate(appProperties.getAdminUrl());
+        adminMain.verify()
+                .verifyCreatedRoomIsVisible(roomNumber,
+                        RoomType.FAMILY.getRoomType(),
+                        RoomAccessible.FALSE.getRoomAccessible(),
+                        roomPrice,
+                        expectedRoomOptions);
 
         adminMain.act()
-                .clickOnCreatedRoom();
+                .clickOnCreatedRoom(roomNumber);
+
+        String newRoomNumber=TestHelpers.getRandomNumeric(3);
+        String newRoomPrice=TestHelpers.getRandomNumeric(3);
 
         adminRoom.act()
                 .clickEditButton()
-                .updateAllRoomDetails(TestHelpers.getRandomNumeric(3),
+                .updateAllRoomDetails(newRoomNumber,
                         RoomType.SUITE.getRoomType(),
                         RoomAccessible.TRUE.getRoomAccessible(),
-                        TestHelpers.getRandomNumeric(3),
+                        newRoomPrice,
                         "Testing Update Room Description",
                         "https://www.mwtestconsultancy.co.uk/")
                 .clickUpdateButton();
 
+        basePage.navigate(appProperties.getMainUrl());
 
+        userMain.act()
+                .waitForHotelLogoLoad()
+                .getListOfVisibleRooms();
+
+        userMain.verify()
+                .verifyRoomIsExistWithRoomNumber(newRoomNumber)
+                .verifyRoomIsExistWithType(RoomType.SUITE.getRoomType())
+                .verifyRoomIsExistWithoutOptions();
     }
 
 
@@ -104,12 +110,6 @@ public class UpdateTests extends TestBase {
                 .checkSafeCheckBox()
                 .clickCreateRoomButton();
 
-        basePage.navigate(appProperties.getMainUrl());
-
-        userMain.act()
-                .waitForHotelLogoLoad()
-                .getListOfVisibleRooms();
-
         List<String> expectedRoomOptions = new ArrayList<>();
         expectedRoomOptions.add(RoomOptions.RADIO.getRoomOption());
         expectedRoomOptions.add(RoomOptions.TV.getRoomOption());
@@ -118,15 +118,15 @@ public class UpdateTests extends TestBase {
         expectedRoomOptions.add(RoomOptions.VIEWS.getRoomOption());
         expectedRoomOptions.add(RoomOptions.SAFE.getRoomOption());
 
-        userMain.verify()
-                .verifyRoomIsExistWithRoomNumber(roomNumber)
-                .verifyRoomIsExistWithType(RoomType.FAMILY.getRoomType())
-                .verifyRoomIsExistWithOptions(expectedRoomOptions);
-
-        basePage.navigate(appProperties.getAdminUrl());
+        adminMain.verify()
+                .verifyCreatedRoomIsVisible(roomNumber,
+                        RoomType.FAMILY.getRoomType(),
+                        RoomAccessible.FALSE.getRoomAccessible(),
+                        roomPrice,
+                        expectedRoomOptions);
 
         adminMain.act()
-                .clickOnCreatedRoom();
+                .clickOnCreatedRoom(roomNumber);
 
         adminRoom.act()
                 .clickEditButton()
@@ -162,12 +162,6 @@ public class UpdateTests extends TestBase {
                 .checkSafeCheckBox()
                 .clickCreateRoomButton();
 
-        basePage.navigate(appProperties.getMainUrl());
-
-        userMain.act()
-                .waitForHotelLogoLoad()
-                .getListOfVisibleRooms();
-
         List<String> expectedRoomOptions = new ArrayList<>();
         expectedRoomOptions.add(RoomOptions.RADIO.getRoomOption());
         expectedRoomOptions.add(RoomOptions.TV.getRoomOption());
@@ -176,15 +170,15 @@ public class UpdateTests extends TestBase {
         expectedRoomOptions.add(RoomOptions.VIEWS.getRoomOption());
         expectedRoomOptions.add(RoomOptions.SAFE.getRoomOption());
 
-        userMain.verify()
-                .verifyRoomIsExistWithRoomNumber(roomNumber)
-                .verifyRoomIsExistWithType(RoomType.FAMILY.getRoomType())
-                .verifyRoomIsExistWithOptions(expectedRoomOptions);
-
-        basePage.navigate(appProperties.getAdminUrl());
+        adminMain.verify()
+                .verifyCreatedRoomIsVisible(roomNumber,
+                        RoomType.FAMILY.getRoomType(),
+                        RoomAccessible.FALSE.getRoomAccessible(),
+                        roomPrice,
+                        expectedRoomOptions);
 
         adminMain.act()
-                .clickOnCreatedRoom();
+                .clickOnCreatedRoom(roomNumber);
 
         adminRoom.act()
                 .clickEditButton()

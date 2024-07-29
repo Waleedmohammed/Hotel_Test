@@ -44,10 +44,18 @@ public class UserVerifyController extends UserMain {
     public UserVerifyController verifyRoomIsExistWithOptions(List<String> expectedOptions) {
         int roomsCount = page.getElementsCountBy(roomsList);
         if (roomsCount > 0) {
-            List<String> actualRoomType = page.getAllAvailableOptionsFromUl(getVisibleRoomOptions(roomsCount));
-            Set<String> set1 = new HashSet<>(actualRoomType);
+            List<String> actualRoomOptions = page.getAllAvailableOptionsFromUl(getVisibleRoomOptions(roomsCount));
+            Set<String> set1 = new HashSet<>(actualRoomOptions);
             Set<String> set2 = new HashSet<>(expectedOptions);
             Assert.assertTrue(set1.containsAll(set2),"Room Options actual results don't match the expected Options");
+        }
+        return this;
+    }
+
+    public UserVerifyController verifyRoomIsExistWithoutOptions() throws Exception {
+        int roomsCount = page.getElementsCountBy(roomsList);
+        if (roomsCount > 0) {
+            Assert.assertFalse(page.isElementVisible(getVisibleRoomOptions(roomsCount)));
         }
         return this;
     }

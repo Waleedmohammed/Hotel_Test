@@ -83,15 +83,16 @@ public class MainActController extends AdminMain {
         return this;
     }
 
-    public MainActController clickOnCreatedRoom() throws Exception {
-        page.getLastElementWith(roomsList).click();
+    public MainActController clickOnCreatedRoom(String roomNumber) throws Exception {
+        page.clickOn(getRoomNumberLbl(roomNumber));
         return this;
     }
 
     public MainActController clickDeleteRoomIcon(String roomNumber) throws Exception {
-        Locator roomNumberElement = page.getElementLocatedBy(getRoomNumberLbl(roomNumber));
-        String roomNumberId = roomNumberElement.locator("..").locator("..").getAttribute("id").substring(4);
-        page.clickOn(getDeleteRoomIcon(roomNumberId));
+//        getRoomSystemId(roomNumber)
+//        Locator roomNumberElement = page.getElementLocatedBy(getRoomNumberLbl(roomNumber));
+//        String roomNumberId = roomNumberElement.locator("..").locator("..").getAttribute("id").substring(4);
+        page.clickOn(getDeleteRoomIcon(getRoomSystemId(roomNumber)));
         return this;
     }
 
