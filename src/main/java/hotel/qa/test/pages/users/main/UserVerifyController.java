@@ -2,15 +2,11 @@ package hotel.qa.test.pages.users.main;
 
 import hotel.qa.test.core.factory.BasePage;
 import hotel.qa.test.helper.TestHelpers;
-import hotel.qa.test.pages.admin.login.LoginVerifyController;
 import hotel.qa.test.utils.SelectedRoomOptions;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.Assert;
-import org.testng.asserts.Assertion;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Slf4j
 public class UserVerifyController extends UserMain {

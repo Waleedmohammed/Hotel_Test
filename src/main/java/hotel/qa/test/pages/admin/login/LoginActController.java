@@ -10,10 +10,6 @@ public class LoginActController extends AdminLogin {
         super(page);
     }
 
-    public LoginActController clickLetMeHackBtn() throws Exception {
-        page.clickOn(letMeHackBtn);
-        return this;
-    }
 
     public LoginActController enterUserName(String userName) throws Exception {
         page.typeIn(userNameTxtBox, userName);

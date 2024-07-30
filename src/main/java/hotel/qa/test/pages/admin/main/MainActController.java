@@ -1,6 +1,5 @@
 package hotel.qa.test.pages.admin.main;
 
-import com.microsoft.playwright.Locator;
 import hotel.qa.test.core.factory.BasePage;
 import hotel.qa.test.utils.RoomOptions;
 import hotel.qa.test.utils.SelectedRoomOptions;
@@ -18,7 +17,7 @@ public class MainActController extends AdminMain {
         super(page);
     }
 
-    public MainActController getCurrentRoomsList() throws Exception {
+    public MainActController getCurrentRoomsList() {
         await().atMost(10, TimeUnit.SECONDS).until(() -> page.getElementLocatedBy(wifiChBox).isVisible());
 
         roomListCount = page.getElementsCountBy(roomsList);

@@ -1,7 +1,6 @@
 package hotel.qa.test.pages.admin.room;
 
 import hotel.qa.test.core.factory.BasePage;
-import hotel.qa.test.pages.admin.main.MainVerifyController;
 import org.testng.Assert;
 
 import java.util.concurrent.TimeUnit;

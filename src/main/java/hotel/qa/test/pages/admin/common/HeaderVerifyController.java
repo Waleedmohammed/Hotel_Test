@@ -14,9 +14,10 @@ public class HeaderVerifyController extends AdminHeader {
 
     public HeaderVerifyController verifyHeaderElementsIsVisible() throws Exception {
 
-        await().atMost(10, TimeUnit.SECONDS).until(() -> page.getElementLocatedBy(reportTab).isVisible());
+        await().atMost(10, TimeUnit.SECONDS).with().pollInterval(1, TimeUnit.SECONDS)
+                .until(() -> page.getElementLocatedBy(reportTab).isVisible());
 
-        if(page.isPageFullyLoaded()){
+        if (page.isPageFullyLoaded()) {
             Assert.assertTrue((page.getElementByHrefLocator(roomsTabHrf).isVisible()), "Create Room button is not visible");
             Assert.assertTrue(page.isElementVisible(reportTab), "Create Room button is not visible");
             Assert.assertTrue(page.isElementVisible(brandingTab), "Branding Tab is not visible");

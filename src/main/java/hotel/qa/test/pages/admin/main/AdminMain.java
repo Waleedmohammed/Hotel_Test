@@ -16,7 +16,6 @@ AdminMain {
 
     protected BasePage page;
     protected int roomListCount;
-    protected List<String> selectedRoomOptions = new ArrayList<>();
 
     AdminMain(BasePage page) {
         this.page = page;
@@ -29,7 +28,6 @@ AdminMain {
         this.verify = verify;
     }
 
-    protected String roomsGrid = "//div[@class='container']";
 
     protected String roomsList = "//div[@class='row detail']";
 
@@ -57,9 +55,6 @@ AdminMain {
 
     protected String errorMessage = "//div[@class='alert alert-danger']/p";
 
-    protected String roomNumberLbl = "//div[@class='alert alert-danger']/p";
-
-    protected String deleteIcon = "//span[@class='fa fa-remove roomDelete']";
 
     public static AdminMain getMain(BasePage page) {
         return new AdminMain(page, new MainActController(page), new MainVerifyController(page));

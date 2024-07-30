@@ -27,8 +27,6 @@ public class AdminHeader {
 
     protected String brandingTab="id=brandingLink";
 
-    protected String createRoomBtn="id=createRoom";
-
     public static AdminHeader getHeader(BasePage page) {
         return new AdminHeader(page, new HeaderActController(page), new HeaderVerifyController(page));
     }

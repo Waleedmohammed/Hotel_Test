@@ -11,7 +11,6 @@ import hotel.qa.test.core.conf.BrowserProperties;
 import hotel.qa.test.core.conf.TestProperties;
 import hotel.qa.test.core.factory.BasePage;
 import hotel.qa.test.core.factory.PageManager;
-import hotel.qa.test.helper.TestHelpers;
 import hotel.qa.test.pages.admin.common.AdminHeader;
 import hotel.qa.test.pages.admin.login.AdminLogin;
 import hotel.qa.test.pages.admin.main.AdminMain;
@@ -123,15 +122,15 @@ public abstract class TestBase extends AbstractTestNGSpringContextTests {
         return Toolkit.getDefaultToolkit().getScreenSize();
     }
 
-    protected void performAdminLogin(AdminLogin adminLogin, AdminHeader adminHeader) throws Exception {
+    protected void performSuccessAdminLogin(AdminLogin adminLogin, AdminHeader adminHeader) throws Exception {
 
         basePage.navigate(appProperties.getAdminUrl());
-
         adminLogin.verify()
                 .verifyAdminPageTitle(testProperties.getAppTitle());
-
         adminLogin.act()
                 .login(appProperties.getAdminUser(), appProperties.getAdminPassword());
+        adminHeader.verify()
+                .verifyHeaderElementsIsVisible();
 
         /*login.act()
                 .clickLetMeHackBtn()
@@ -139,7 +138,5 @@ public abstract class TestBase extends AbstractTestNGSpringContextTests {
                 .enterPassword(appProperties.getPassword())
                 .clickLoginBtn();
 */
-        adminHeader.verify()
-                .verifyHeaderElementsIsVisible();
     }
 }

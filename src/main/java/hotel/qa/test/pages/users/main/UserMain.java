@@ -1,7 +1,6 @@
 package hotel.qa.test.pages.users.main;
 
 
-import com.microsoft.playwright.Locator;
 import hotel.qa.test.core.factory.BasePage;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,27 +27,6 @@ UserMain {
 
     protected String roomsList = "//img[@class='img-responsive hotel-img']";
 
-    protected String roomNumTxtBox = "id=roomName";
-
-    protected String roomTypeDdl = "id=type";
-
-    protected String roomAccessibleDdl = "id=accessible";
-
-    protected String roomPriceTxtBox = "id=roomPrice";
-
-    protected String wifiChBox = "id=wifiCheckbox";
-
-    protected String refreshmentChBox = "id=refreshCheckbox";
-
-    protected String tvChBox = "id=tvCheckbox";
-
-    protected String safeChBox = "id=safeCheckbox";
-
-    protected String radioChBox = "id=radioCheckbox";
-
-    protected String viewsChBox = "id=viewsCheckbox";
-
-    protected String createRoomBtn = "id=createRoom";
 
     public static UserMain getUserMain(BasePage page) {
         return new UserMain(page, new UserActController(page), new UserVerifyController(page));

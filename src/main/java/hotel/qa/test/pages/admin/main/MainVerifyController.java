@@ -7,7 +7,6 @@ import org.testng.Assert;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 import static org.awaitility.Awaitility.await;
 
@@ -24,7 +23,7 @@ public class MainVerifyController extends AdminMain {
 
         String actualRoomOptions = page.getElementLocatedBy(getRoomDetailsLbl(roomId)).textContent();
         List<String> optionsItems = Arrays.stream(actualRoomOptions.split(","))
-                .map(String::trim) // Remove leading and trailing spaces
+                .map(String::trim)
                 .toList();
 
         log.info("Room ID in system is "+roomId);
@@ -34,6 +33,7 @@ public class MainVerifyController extends AdminMain {
         Assert.assertEquals(page.getElementLocatedBy(getRoomAccessibleLbl(roomId)).nth(1).textContent(), expectedRoomAccessible, "Room Accessible is not matching expected Accessible");
         Assert.assertEquals(page.getElementLocatedBy(getRoomPriceLbl(expectedRoomPrice)).textContent(), expectedRoomPrice, "Room Price is not matching expected Price");
         Assert.assertTrue(optionsItems.containsAll(SelectedRoomOptions.getInstance().getItems()),"Room Options is not matching expected Options");
+
         SelectedRoomOptions.getInstance().clear();
         return this;
     }
@@ -50,13 +50,4 @@ public class MainVerifyController extends AdminMain {
         return this;
     }
 
-
-    private boolean containsAllWithFrequency(List<String> list1, List<String> list2) {
-        for (String item : list1) {
-            if (Collections.frequency(list1, item) > Collections.frequency(list2, item)) {
-                return false;
-            }
-        }
-        return true;
-    }
 }

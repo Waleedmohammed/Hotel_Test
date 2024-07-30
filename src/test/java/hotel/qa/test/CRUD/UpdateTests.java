@@ -24,11 +24,14 @@ public class UpdateTests extends TestBase {
         userMain = getUserMain(basePage);
         adminRoom = getRoom(basePage);
 
-        performAdminLogin(adminLogin, adminHeader);
+        // Perform login & success login verifications step
+        performSuccessAdminLogin(adminLogin, adminHeader);
 
+        // Creating test data for roomNumber and roomPrice
         roomNumber = TestHelpers.getRandomNumeric(3);
         roomPrice = TestHelpers.getRandomNumeric(3);
 
+        // Execute create new room steps as requisite for updating it
         adminMain.act()
                 .typeRoomNumber(roomNumber)
                 .selectRoomType(RoomType.FAMILY.getRoomType())
@@ -51,9 +54,11 @@ public class UpdateTests extends TestBase {
         adminMain.act()
                 .clickOnCreatedRoom(roomNumber);
 
+        // Creating new test data for updating roomNumber and roomPrice
         roomNumber = TestHelpers.getRandomNumeric(3);
         roomPrice = TestHelpers.getRandomNumeric(3);
 
+        // Execute Update room steps
         adminRoom.act()
                 .clickEditButton()
                 .updateAllRoomDetails(roomNumber,
@@ -64,17 +69,20 @@ public class UpdateTests extends TestBase {
                         testProperties.getNewRoomUrl())
                 .clickUpdateButton();
 
+        // Navigate to main system page
         basePage.navigate(appProperties.getMainUrl());
 
         userMain.act()
                 .waitForHotelLogoLoad()
                 .getListOfVisibleRooms();
 
+        // Verify that updated room is visible with updated data
         userMain.verify()
                 .verifyRoomIsExistWithRoomNumber(roomNumber)
                 .verifyRoomIsExistWithType(RoomType.SUITE.getRoomType())
                 .verifyRoomIsExistWithoutOptions();
 
+        // Go back to admin page to clean up test record
         basePage.navigate(appProperties.getAdminUrl());
 
         adminMain.act()
@@ -93,7 +101,7 @@ public class UpdateTests extends TestBase {
         userMain = getUserMain(basePage);
         adminRoom = getRoom(basePage);
 
-        performAdminLogin(adminLogin, adminHeader);
+        performSuccessAdminLogin(adminLogin, adminHeader);
 
         roomNumber = TestHelpers.getRandomNumeric(3);
         roomPrice = TestHelpers.getRandomNumeric(3);
@@ -140,7 +148,7 @@ public class UpdateTests extends TestBase {
         userMain = getUserMain(basePage);
         adminRoom = getRoom(basePage);
 
-        performAdminLogin(adminLogin, adminHeader);
+        performSuccessAdminLogin(adminLogin, adminHeader);
 
         roomNumber = TestHelpers.getRandomNumeric(3);
         roomPrice = TestHelpers.getRandomNumeric(3);
