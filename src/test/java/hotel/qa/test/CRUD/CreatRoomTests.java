@@ -24,18 +24,19 @@ public class CreatRoomTests extends TestBase {
         adminMain = getMain(basePage);
         userMain = getUserMain(basePage);
 
+        // Perform login & success login verifications step
         adminLogin.act()
                 .login(appProperties.getAdminUser(), appProperties.getAdminPassword());
-
         adminLogin.verify()
                 .verifyAdminPageTitle(testProperties.getAppTitle());
-
         adminHeader.verify()
                 .verifyHeaderElementsIsVisible();
 
+        // Creating test data for roomNumber and roomPrice
         roomNumber = TestHelpers.getRandomNumeric(3);
         roomPrice = TestHelpers.getRandomNumeric(3);
 
+        // Execute create new room steps
         adminMain.act()
                 .typeRoomNumber(roomNumber)
                 .selectRoomType(RoomType.FAMILY.getRoomType())
@@ -46,14 +47,20 @@ public class CreatRoomTests extends TestBase {
                 .checkRefreshmentCheckBox()
                 .clickCreateRoomButton();
 
+        // Verify that room created successfully and visible on available rooms list
         adminMain.verify()
                 .verifyCreatedRoomIsVisible(roomNumber,
                         RoomType.FAMILY.getRoomType(),
                         RoomAccessible.FALSE.getRoomAccessible(),
                         roomPrice);
 
+
+        // Cleanup for test records from system
         adminMain.act()
                 .clickDeleteRoomIcon(roomNumber);
+        adminMain.verify()
+                .verifyDeletedRoomNumberIsNotVisible(roomNumber);
+
     }
 
     @Test
@@ -84,7 +91,7 @@ public class CreatRoomTests extends TestBase {
                 .clickCreateRoomButton();
 
         adminMain.verify()
-                        .verifyErrorMessageDisplayed(testProperties.getErrorRoomNumber());
+                .verifyErrorMessageDisplayed(testProperties.getErrorRoomNumber());
 
     }
 

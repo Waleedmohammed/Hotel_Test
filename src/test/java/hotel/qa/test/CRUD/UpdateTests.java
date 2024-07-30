@@ -79,6 +79,8 @@ public class UpdateTests extends TestBase {
 
         adminMain.act()
                 .clickDeleteRoomIcon(roomNumber);
+        adminMain.verify()
+                .verifyDeletedRoomNumberIsNotVisible(roomNumber);
     }
 
 

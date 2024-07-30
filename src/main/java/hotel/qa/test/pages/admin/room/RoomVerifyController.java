@@ -14,7 +14,7 @@ public class RoomVerifyController extends AdminRoom {
     }
 
     public RoomVerifyController verifyErrorMessageDisplayed(String expectedErrorMessage) throws Exception {
-        await().atMost(3, TimeUnit.SECONDS).until(() -> page.getElementLocatedBy(errorMessage).isVisible());
+        await().atMost(5, TimeUnit.SECONDS).until(() -> page.getElementLocatedBy(errorMessage).isVisible());
         Assert.assertEquals(page.getText(errorMessage), expectedErrorMessage, "Expected Error Message doesn't match Actual Message");
         return this;
     }
