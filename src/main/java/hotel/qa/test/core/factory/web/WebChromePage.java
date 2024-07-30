@@ -20,12 +20,18 @@ public class WebChromePage extends BasePage {
     protected Page init(Browser.NewContextOptions context) {
 
         tlPlaywright.set(Playwright.create());
-        tlBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions()
-                .setHeadless(browserConfig.isHeadless())));
-                //.setSlowMo(browserConfig.getSlowMotionMs())));
+        if (browserConfig.isSlowMotion()) {
+            tlBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions()
+                    .setHeadless(browserConfig.isHeadless())
+                    .setSlowMo(browserConfig.getSlowMotionMs())));
+        } else {
+            tlBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions()
+                    .setHeadless(browserConfig.isHeadless())));
+        }
+
         if (context != null) {
             tlBrowserContext.set(getBrowser().newContext(context));
-        }else {
+        } else {
             tlBrowserContext.set(getBrowser().newContext());
         }
         tlPage.set(getBrowserContext().newPage());

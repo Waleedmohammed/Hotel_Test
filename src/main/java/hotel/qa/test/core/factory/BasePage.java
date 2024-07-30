@@ -38,7 +38,7 @@ public abstract class BasePage {
 
         log.info("Starting page session...");
         page = init(context);
-        page.setDefaultTimeout(browserConfig.getExplicitlyWait());
+        page.setDefaultTimeout(browserConfig.getDefaultTimeOut());
     }
 
     protected abstract Page init(Browser.NewContextOptions context);
@@ -62,23 +62,10 @@ public abstract class BasePage {
     public void quit() {
         if (page != null) {
             getPage().close();
-            //page.close();
-            //page.context().close();
             getBrowserContext().close();
-            //page.context().browser().close()
-            //page.context();
             getPlaywright().close();
             log.info("Page context closed");
         }
-    }
-
-    public boolean isPageFullyLoaded() {
-
-        Object result = page.evaluate("document.readyState === 'complete' && window.performance.navigation.type === 0");
-        log.info("Loading eveluation is {}", result);
-
-        return result instanceof Boolean && (Boolean) result;
-
     }
 
     public Response navigate(String url) {
@@ -89,8 +76,6 @@ public abstract class BasePage {
 
     public String takeScreenshot() {
         String path = System.getProperty("user.dir") + "/Screenshots/" + System.currentTimeMillis() + ".png";
-        //getPage().screenshot(new Page.ScreenshotOptions().setPath(Paths.get(path)).setFullPage(true));
-
         byte[] buffer = getPage().screenshot(new Page.ScreenshotOptions().setPath(Paths.get(path)).setFullPage(true));
         String base64Path = Base64.getEncoder().encodeToString(buffer);
 
@@ -157,7 +142,7 @@ public abstract class BasePage {
         page.locator(locator)
                 .waitFor(new Locator.WaitForOptions()
                         .setState(WaitForSelectorState.VISIBLE)
-                        .setTimeout(browserConfig.getExplicitlyWait()));
+                        .setTimeout(browserConfig.getDefaultTimeOut()));
         Integer obj = (Integer) page.evalOnSelectorAll(locator, "e=> e.length");
         log.info("There are {} elements found with xpth {}", obj, locator);
         return obj;
@@ -179,7 +164,7 @@ public abstract class BasePage {
     public boolean isElementEnabled(String locator) throws Exception {
         try {
             boolean enabled = page.isEnabled(locator, new Page.IsEnabledOptions()
-                    .setTimeout(browserConfig.getExplicitlyWait()));
+                    .setTimeout(browserConfig.getDefaultTimeOut()));
             log.info("Element located by " + locator + " is enabled");
             return enabled;
         } catch (Exception e) {
@@ -192,7 +177,7 @@ public abstract class BasePage {
     public boolean isElementChecked(String locator) throws Exception {
         try {
             boolean checked = page.isChecked(locator, new Page.IsCheckedOptions()
-                    .setTimeout(browserConfig.getExplicitlyWait()));
+                    .setTimeout(browserConfig.getDefaultTimeOut()));
             log.info("Element located by " + locator + " is checked");
             return checked;
         } catch (Exception e) {
@@ -287,6 +272,15 @@ public abstract class BasePage {
     public void TypeTextInAlert(String text) {
         page.onDialog(dialog -> dialog.accept(text));
         log.info("Typed {} in alert and moving on ....", text);
+    }
+
+    public boolean isPageFullyLoaded() {
+
+        Object result = page.evaluate("document.readyState === 'complete' && window.performance.navigation.type === 0");
+        log.info("Loading eveluation is {}", result);
+
+        return result instanceof Boolean && (Boolean) result;
+
     }
 
     public void download(String text) {

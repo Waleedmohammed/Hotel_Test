@@ -11,19 +11,10 @@ public class BrowserProperties {
 
     private String name;
     private boolean Headless;
+    private boolean SlowMotion;
     private int SlowMotionMs;
-    private boolean DriverService;
-    private boolean GetConsoleLog;
     private boolean Maximize;
     private boolean acceptDownloads;
-
-    private String pageLoadingStrategy;
-    private long implicitlyWait;
-    private long explicitlyWait;
-    private long pageLoadTimeout;
-    private String scriptTimeout;
-    private String chromePath;
-    private String firFoxPath;
     private String downloadPath;
-
+    private long defaultTimeOut;
 }
