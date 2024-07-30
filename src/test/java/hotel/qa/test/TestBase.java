@@ -16,6 +16,7 @@ import hotel.qa.test.pages.admin.login.AdminLogin;
 import hotel.qa.test.pages.admin.main.AdminMain;
 import hotel.qa.test.pages.admin.room.AdminRoom;
 import hotel.qa.test.pages.users.main.UserMain;
+import hotel.qa.test.utils.SelectedRoomOptions;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -62,8 +63,6 @@ public abstract class TestBase extends AbstractTestNGSpringContextTests {
     public static ExtentTest logger;
     public static ExtentReports report;
 
-    public static String roomNumber;
-    public static String roomPrice;
 
     @BeforeTest
     public void initReport() {
@@ -109,7 +108,6 @@ public abstract class TestBase extends AbstractTestNGSpringContextTests {
             logger.log(Status.SKIP, method.getName());
         }
         basePage.quit();
-
     }
 
     @AfterTest

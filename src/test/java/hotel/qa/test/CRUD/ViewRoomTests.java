@@ -31,8 +31,8 @@ public class ViewRoomTests extends TestBase {
         adminHeader.verify()
                 .verifyHeaderElementsIsVisible();
 
-        roomNumber = TestHelpers.getRandomNumeric(3);
-        roomPrice = TestHelpers.getRandomNumeric(3);
+        String roomNumber = TestHelpers.getRandomNumeric(3);
+        String roomPrice = TestHelpers.getRandomNumeric(3);
 
 
         adminMain.act()

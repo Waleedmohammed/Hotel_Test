@@ -51,37 +51,37 @@ public class MainActController extends AdminMain {
 
     public MainActController checkWifiCheckBox() throws Exception {
         page.check(wifiChBox);
-        SelectedRoomOptions.getInstance().addItem(RoomOptions.WIFI.getRoomOption());
+        SelectedRoomOptions.getSelectedOptions().add(RoomOptions.WIFI.getRoomOption());
         return this;
     }
 
     public MainActController checkRefreshmentCheckBox() throws Exception {
         page.check(refreshmentChBox);
-        SelectedRoomOptions.getInstance().addItem(RoomOptions.REFRESHMENTS.getRoomOption());
+        SelectedRoomOptions.getSelectedOptions().add(RoomOptions.REFRESHMENTS.getRoomOption());
         return this;
     }
 
     public MainActController checkTvCheckBox() throws Exception {
         page.check(tvChBox);
-        SelectedRoomOptions.getInstance().addItem(RoomOptions.TV.getRoomOption());
+        SelectedRoomOptions.getSelectedOptions().add(RoomOptions.TV.getRoomOption());
         return this;
     }
 
     public MainActController checkSafeCheckBox() throws Exception {
         page.check(safeChBox);
-        SelectedRoomOptions.getInstance().addItem(RoomOptions.SAFE.getRoomOption());
+        SelectedRoomOptions.getSelectedOptions().add(RoomOptions.SAFE.getRoomOption());
         return this;
     }
 
     public MainActController checkRadioCheckBox() throws Exception {
         page.check(radioChBox);
-        SelectedRoomOptions.getInstance().addItem(RoomOptions.RADIO.getRoomOption());
+        SelectedRoomOptions.getSelectedOptions().add(RoomOptions.RADIO.getRoomOption());
         return this;
     }
 
     public MainActController checkViewsCheckBox() throws Exception {
         page.check(viewsChBox);
-        SelectedRoomOptions.getInstance().addItem(RoomOptions.VIEWS.getRoomOption());
+        SelectedRoomOptions.getSelectedOptions().add(RoomOptions.VIEWS.getRoomOption());
         return this;
     }
 

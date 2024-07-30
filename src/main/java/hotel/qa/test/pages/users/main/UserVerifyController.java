@@ -40,12 +40,12 @@ public class UserVerifyController extends UserMain {
 
     public UserVerifyController verifyRoomIsExistWithSelectedOptions() {
         int roomsCount = page.getElementsCountBy(roomsList);
-        log.info("Expected Room Options {}",SelectedRoomOptions.getInstance().getItems());
+        log.info("Expected Room Options {}",SelectedRoomOptions.getSelectedOptions());
         if (roomsCount > 0) {
             List<String> actualRoomOptions = page.getAllAvailableOptionsFromUl(getVisibleRoomOptions(roomsCount));
             log.info("Actual Room Options {}",actualRoomOptions);
-            Assert.assertTrue(actualRoomOptions.containsAll(SelectedRoomOptions.getInstance().getItems()),"Room Options actual results don't match the expected Options");
-            SelectedRoomOptions.getInstance().clear();
+            Assert.assertTrue(actualRoomOptions.containsAll(SelectedRoomOptions.getSelectedOptions()),"Room Options actual results don't match the expected Options");
+            SelectedRoomOptions.getSelectedOptions().clear();
         }
         return this;
     }

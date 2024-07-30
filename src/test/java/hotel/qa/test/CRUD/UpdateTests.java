@@ -28,8 +28,8 @@ public class UpdateTests extends TestBase {
         performSuccessAdminLogin(adminLogin, adminHeader);
 
         // Creating test data for roomNumber and roomPrice
-        roomNumber = TestHelpers.getRandomNumeric(3);
-        roomPrice = TestHelpers.getRandomNumeric(3);
+        String roomNumber = TestHelpers.getRandomNumeric(3);
+        String roomPrice = TestHelpers.getRandomNumeric(3);
 
         // Execute create new room steps as requisite for updating it
         adminMain.act()
@@ -55,16 +55,15 @@ public class UpdateTests extends TestBase {
                 .clickOnCreatedRoom(roomNumber);
 
         // Creating new test data for updating roomNumber and roomPrice
-        roomNumber = TestHelpers.getRandomNumeric(3);
-        roomPrice = TestHelpers.getRandomNumeric(3);
+        String newRoomNumber = TestHelpers.getRandomNumeric(3);
 
         // Execute Update room steps
         adminRoom.act()
                 .clickEditButton()
-                .updateAllRoomDetails(roomNumber,
+                .updateAllRoomDetails(newRoomNumber,
                         RoomType.SUITE.getRoomType(),
                         RoomAccessible.TRUE.getRoomAccessible(),
-                        roomNumber,
+                        newRoomNumber,
                         testProperties.getNewRoomDescription(),
                         testProperties.getNewRoomUrl())
                 .clickUpdateButton();
@@ -78,7 +77,7 @@ public class UpdateTests extends TestBase {
 
         // Verify that updated room is visible with updated data
         userMain.verify()
-                .verifyRoomIsExistWithRoomNumber(roomNumber)
+                .verifyRoomIsExistWithRoomNumber(newRoomNumber)
                 .verifyRoomIsExistWithType(RoomType.SUITE.getRoomType())
                 .verifyRoomIsExistWithoutOptions();
 
@@ -86,9 +85,9 @@ public class UpdateTests extends TestBase {
         basePage.navigate(appProperties.getAdminUrl());
 
         adminMain.act()
-                .clickDeleteRoomIcon(roomNumber);
+                .clickDeleteRoomIcon(newRoomNumber);
         adminMain.verify()
-                .verifyDeletedRoomNumberIsNotVisible(roomNumber);
+                .verifyDeletedRoomNumberIsNotVisible(newRoomNumber);
     }
 
 
@@ -103,8 +102,8 @@ public class UpdateTests extends TestBase {
 
         performSuccessAdminLogin(adminLogin, adminHeader);
 
-        roomNumber = TestHelpers.getRandomNumeric(3);
-        roomPrice = TestHelpers.getRandomNumeric(3);
+        String roomNumber = TestHelpers.getRandomNumeric(3);
+        String roomPrice = TestHelpers.getRandomNumeric(3);
 
 
         adminMain.act()
@@ -150,8 +149,8 @@ public class UpdateTests extends TestBase {
 
         performSuccessAdminLogin(adminLogin, adminHeader);
 
-        roomNumber = TestHelpers.getRandomNumeric(3);
-        roomPrice = TestHelpers.getRandomNumeric(3);
+        String roomNumber = TestHelpers.getRandomNumeric(3);
+        String roomPrice = TestHelpers.getRandomNumeric(3);
 
 
         adminMain.act()

@@ -33,8 +33,8 @@ public class CreatRoomTests extends TestBase {
                 .verifyHeaderElementsIsVisible();
 
         // Creating test data for roomNumber and roomPrice
-        roomNumber = TestHelpers.getRandomNumeric(3);
-        roomPrice = TestHelpers.getRandomNumeric(3);
+        String roomNumber = TestHelpers.getRandomNumeric(3);
+        String roomPrice = TestHelpers.getRandomNumeric(3);
 
         // Execute create new room steps
         adminMain.act()
@@ -79,7 +79,7 @@ public class CreatRoomTests extends TestBase {
         adminHeader.verify()
                 .verifyHeaderElementsIsVisible();
 
-        roomPrice = TestHelpers.getRandomNumeric(3);
+        String roomPrice = TestHelpers.getRandomNumeric(3);
 
         adminMain.act()
                 .selectRoomType(RoomType.FAMILY.getRoomType())
@@ -111,7 +111,7 @@ public class CreatRoomTests extends TestBase {
         adminHeader.verify()
                 .verifyHeaderElementsIsVisible();
 
-        roomNumber = TestHelpers.getRandomNumeric(3);
+        String roomNumber = TestHelpers.getRandomNumeric(3);
 
         adminMain.act()
                 .typeRoomNumber(roomNumber)

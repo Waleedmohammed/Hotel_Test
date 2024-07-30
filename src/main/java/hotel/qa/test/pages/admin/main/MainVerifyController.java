@@ -28,13 +28,16 @@ public class MainVerifyController extends AdminMain {
 
         log.info("Room ID in system is "+roomId);
 
+        log.info("Expected Options "+SelectedRoomOptions.getSelectedOptions());
+        log.info("Actual Options "+optionsItems);
+
+
         Assert.assertEquals(page.getElementLocatedBy(getRoomNumberLbl(expectedRoomNumber)).textContent(), expectedRoomNumber, "Room Number is not matching expected number");
         Assert.assertEquals(page.getElementLocatedBy(getRoomTypeLbl(roomId)).first().textContent(), expectedRoomType, "Room Type is not matching expected Type");
         Assert.assertEquals(page.getElementLocatedBy(getRoomAccessibleLbl(roomId)).nth(1).textContent(), expectedRoomAccessible, "Room Accessible is not matching expected Accessible");
         Assert.assertEquals(page.getElementLocatedBy(getRoomPriceLbl(expectedRoomPrice)).textContent(), expectedRoomPrice, "Room Price is not matching expected Price");
-        Assert.assertTrue(optionsItems.containsAll(SelectedRoomOptions.getInstance().getItems()),"Room Options is not matching expected Options");
-
-        SelectedRoomOptions.getInstance().clear();
+        Assert.assertTrue(optionsItems.containsAll(SelectedRoomOptions.getSelectedOptions()),"Room Options is not matching expected Options");
+        SelectedRoomOptions.clearSelectedOptionsList();
         return this;
     }
 
