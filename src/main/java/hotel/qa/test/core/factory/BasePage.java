@@ -3,9 +3,9 @@ package hotel.qa.test.core.factory;
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
-import com.sun.jdi.ObjectReference;
 import hotel.qa.test.core.conf.BrowserProperties;
 import lombok.extern.slf4j.Slf4j;
+import org.awaitility.Awaitility;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -14,34 +14,21 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static org.awaitility.Awaitility.await;
 
 @Slf4j
 @Component
 public abstract class BasePage {
 
+    private Page page;
+    protected BrowserProperties browserConfig;
+
     protected static ThreadLocal<Browser> tlBrowser = new ThreadLocal<>();
     protected static ThreadLocal<BrowserContext> tlBrowserContext = new ThreadLocal<>();
     protected static ThreadLocal<Page> tlPage = new ThreadLocal<>();
     protected static ThreadLocal<Playwright> tlPlaywright = new ThreadLocal<>();
-    protected BrowserProperties browserConfig;
-    private Page page;
-
-
-    public BasePage(BrowserProperties browserConfig) {
-        this.browserConfig = browserConfig;
-    }
-
-
-    public void start(Browser.NewContextOptions context) {
-        String browserName = browserConfig.getName();
-        log.info("Initialising browser : {} ", browserName);
-
-        log.info("Starting page session...");
-        page = init(context);
-        page.setDefaultTimeout(browserConfig.getDefaultTimeOut());
-    }
-
-    protected abstract Page init(Browser.NewContextOptions context);
 
     public static Playwright getPlaywright() {
         return tlPlaywright.get();
@@ -59,6 +46,20 @@ public abstract class BasePage {
         return tlPage.get();
     }
 
+    public BasePage(BrowserProperties browserConfig) {
+        this.browserConfig = browserConfig;
+    }
+
+
+    public void start(Browser.NewContextOptions context) {
+        log.info("Starting page session...");
+        page = init(context);
+        page.setDefaultTimeout(browserConfig.getDefaultTimeOut());
+    }
+
+    protected abstract Page init(Browser.NewContextOptions context);
+
+
     public void quit() {
         if (page != null) {
             getPage().close();
@@ -68,13 +69,13 @@ public abstract class BasePage {
         }
     }
 
-    public Response navigate(String url) {
-        Response response = page.navigate(url);
+    public void navigate(String url) {
+        page.navigate(url);
         log.info("opened {}", url);
-        return response;
     }
 
     public String takeScreenshot() {
+
         String path = System.getProperty("user.dir") + "/Screenshots/" + System.currentTimeMillis() + ".png";
         byte[] buffer = getPage().screenshot(new Page.ScreenshotOptions().setPath(Paths.get(path)).setFullPage(true));
         String base64Path = Base64.getEncoder().encodeToString(buffer);
@@ -88,39 +89,12 @@ public abstract class BasePage {
         return title;
     }
 
-    public List<Integer> getAllResponseStatus() {
-        List<Integer> statuses = new ArrayList<>();
-        page.onResponse(response -> statuses.add(response.status()));
-        return statuses;
-    }
-
-    public void printAllRequestResponses() {
-        page.onResponse(response -> System.out.println(">> " + response.request().method() + " " + response.request().url() + " return " + response.status()));
-    }
-
-    public void waitForSelector(String selector) {
-        page.waitForSelector(selector);
-    }
-
-    public FrameLocator getFrameLocatedBy(String frameLocator) {
-        return page.frameLocator(frameLocator);
-    }
-
     public void clickOn(String locator) throws Exception {
         try {
-
+            await().atMost(5, TimeUnit.SECONDS).with().pollInterval(10, TimeUnit.MILLISECONDS)
+                    .until(() -> page.locator(locator).isVisible());
             page.locator(locator).click();
             log.info("Element located by " + locator + " is succesfully clicked");
-            // Wait for network to be idle (no more network activity)
-            //page.waitForFunction("window.performance.getEntriesByType('resource').length === 0");
-
-            // Optionally, add more checks if needed
-            page.waitForFunction("document.readyState === 'complete'");
-
-            page.waitForFunction("!document.querySelector('loading-spinner-selector')");
-
-
-            page.waitForLoadState(LoadState.LOAD);
         } catch (Exception e) {
             log.error("Cannot click element located by " + locator);
             e.printStackTrace();
@@ -128,30 +102,23 @@ public abstract class BasePage {
         }
     }
 
-    public void typeIn(String Locator, String text) throws Exception {
+    public void typeIn(String locator, String text) throws Exception {
         try {
-            page.fill(Locator, text);
-            log.info("Entered value: " + text + " on element located by " + Locator);
+            await().atMost(5, TimeUnit.SECONDS).with().pollInterval(10, TimeUnit.MILLISECONDS)
+                    .until(() -> page.locator(locator).isVisible());
+            page.locator(locator).fill(text);
+            log.info("Entered value: " + text + " on element located by " + locator);
         } catch (Exception e) {
-            log.error("Cannot enter value in : " + text + " on element located by " + Locator);
-            throw new Exception("Cannot enter value in element located by : " + Locator);
+            log.error("Cannot enter value in : " + text + " on element located by " + locator);
+            throw new Exception("Cannot enter value in element located by : " + locator);
         }
     }
 
-    public int findElementsCountLocatedBy(String locator) {
-        page.locator(locator)
-                .waitFor(new Locator.WaitForOptions()
-                        .setState(WaitForSelectorState.VISIBLE)
-                        .setTimeout(browserConfig.getDefaultTimeOut()));
-        Integer obj = (Integer) page.evalOnSelectorAll(locator, "e=> e.length");
-        log.info("There are {} elements found with xpth {}", obj, locator);
-        return obj;
-    }
 
     public boolean isElementVisible(String locator) throws Exception {
         try {
             page.waitForLoadState(LoadState.LOAD);
-            boolean visible = page.isVisible(locator);
+            boolean visible = page.locator(locator).isVisible();
             log.info("Element located by " + locator + " Visiblity is " + visible);
             return visible;
         } catch (Exception e) {
@@ -161,35 +128,10 @@ public abstract class BasePage {
         }
     }
 
-    public boolean isElementEnabled(String locator) throws Exception {
-        try {
-            boolean enabled = page.isEnabled(locator, new Page.IsEnabledOptions()
-                    .setTimeout(browserConfig.getDefaultTimeOut()));
-            log.info("Element located by " + locator + " is enabled");
-            return enabled;
-        } catch (Exception e) {
-            log.error("Element located by " + locator + " is not enabled");
-            e.printStackTrace();
-            throw new Exception("Element located by " + locator + " is not enabled");
-        }
-    }
-
-    public boolean isElementChecked(String locator) throws Exception {
-        try {
-            boolean checked = page.isChecked(locator, new Page.IsCheckedOptions()
-                    .setTimeout(browserConfig.getDefaultTimeOut()));
-            log.info("Element located by " + locator + " is checked");
-            return checked;
-        } catch (Exception e) {
-            log.error("Element located by " + locator + " is not checked");
-            e.printStackTrace();
-            throw new Exception("Element located by " + locator + " is not checked");
-        }
-    }
-
-
     public void selectFromDDL(String locator, String value) throws Exception {
         try {
+            await().atMost(5, TimeUnit.SECONDS).with().pollInterval(10, TimeUnit.MILLISECONDS)
+                    .until(() -> page.locator(locator).isVisible());
             page.selectOption(locator, value);
             log.info(value + " has been selected from DDL located by " + locator);
         } catch (Exception e) {
@@ -201,6 +143,8 @@ public abstract class BasePage {
 
     public String getText(String locator) throws Exception {
         try {
+            await().atMost(5, TimeUnit.SECONDS).with().pollInterval(10, TimeUnit.MILLISECONDS)
+                    .until(() -> page.locator(locator).isVisible());
             String text = page.innerText(locator);
             log.info(text + " retrieved from Element located by " + locator);
             return text;
@@ -213,6 +157,8 @@ public abstract class BasePage {
 
     public void check(String locator) throws Exception {
         try {
+            await().atMost(5, TimeUnit.SECONDS).with().pollInterval(10, TimeUnit.MILLISECONDS)
+                    .until(() -> page.locator(locator).isVisible());
             page.check(locator);
             log.info("Checkbox located by {} checked", locator);
         } catch (Exception e) {
@@ -222,106 +168,14 @@ public abstract class BasePage {
         }
     }
 
-    public void unCheck(String locator) throws Exception {
-        try {
-            page.uncheck(locator);
-            log.info("Checkbox located by {} unChecked", locator);
-        } catch (Exception e) {
-            log.info("Checkbox located by {} can not unChecked", locator);
-            e.printStackTrace();
-            throw new Exception("Checkbox located by " + locator + " can not unChecked");
-        }
-    }
-
-    public void reload() {
-        page.reload();
-        log.info("Page reloaded .... ");
-    }
-
-    public void goBack() {
-        page.goBack();
-        log.info("Page goBack .... ");
-    }
-
-    public void goForward() {
-        page.goForward();
-        log.info("Page goForward .... ");
-    }
-
-    public void doubleClick(String locator) throws Exception {
-        try {
-            page.dblclick(locator);
-            log.info("Double click on element located by {}", locator);
-        } catch (Exception e) {
-            log.info("Can not Double click on element located by {}", locator);
-            e.printStackTrace();
-            throw new Exception("Can not Double click on element located by " + locator);
-        }
-    }
-
-    public void acceptAlert() {
-        page.onDialog(Dialog::accept);
-        log.info("Alert Accepted ....");
-    }
-
-    public void dismissAlert() {
-        page.onDialog(Dialog::dismiss);
-        log.info("Alert dismissed ....");
-    }
-
-    public void TypeTextInAlert(String text) {
-        page.onDialog(dialog -> dialog.accept(text));
-        log.info("Typed {} in alert and moving on ....", text);
-    }
-
     public boolean isPageFullyLoaded() {
-
         Object result = page.evaluate("document.readyState === 'complete' && window.performance.navigation.type === 0");
         log.info("Loading eveluation is {}", result);
-
         return result instanceof Boolean && (Boolean) result;
 
     }
 
-    public void download(String text) {
-        page.onDownload(download -> download.saveAs(Paths.get(new File(browserConfig.getDownloadPath()).toURI())));
-        log.info("Typed {} in alert and moving on ....", text);
-    }
-
-    public void waitForDownload(String downloadBtnLocator) {
-        Download download = page.waitForDownload(() -> page.click(downloadBtnLocator));
-        Path path = download.path();
-        log.info("File downloaded to {}", path);
-    }
-
-    public void uploadOneFile(String uploadBtnLocator, File fileToUpload) throws Exception {
-
-        try {
-            page.setInputFiles(uploadBtnLocator, Paths.get(fileToUpload.toURI()));
-            log.info("File {} selected ....", fileToUpload);
-        } catch (Exception e) {
-            log.info("File {} can not be selected ....", fileToUpload);
-            e.printStackTrace();
-            throw new Exception("File " + fileToUpload + " can not be selected ....");
-        }
-    }
-
-    public void revertUploadOneFile(String uploadBtnLocator) throws Exception {
-
-        try {
-            page.setInputFiles(uploadBtnLocator, new Path[0]);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new Exception("File reverted from upload ....");
-        }
-    }
-
-    public Locator getElementByHrefLocator(String hrefValue) {
-        return page.locator("a[href='" + hrefValue + "']");
-    }
-
     public int getElementsCountBy(String locator) {
-        page.waitForLoadState(LoadState.LOAD);
         return page.locator(locator).count();
     }
 
@@ -341,6 +195,9 @@ public abstract class BasePage {
 
     public List<String> getAllAvailableOptionsFromUl(String ulLocator) {
 
+        await().atMost(5, TimeUnit.SECONDS).with().pollInterval(10, TimeUnit.MILLISECONDS)
+                .until(() -> page.locator(ulLocator).isVisible());
+
         List<String> listItems = new ArrayList<>();
         Locator liElements = page.locator(ulLocator).locator("li");
 
@@ -357,13 +214,9 @@ public abstract class BasePage {
         }
     }
 
-    public Locator getLastElementWith(String locator) {
-        int count = page.locator(locator).count();
-        log.info("Returning Last element located by {} From {} elements", locator, count);
-        return page.locator(locator).last();
-    }
-
     public Locator getElementLocatedBy(String locator) {
+        await().atMost(5, TimeUnit.SECONDS).with().pollInterval(10, TimeUnit.MILLISECONDS)
+                .until(() -> page.locator(locator).isVisible());
         log.info("Returning element located by {}", locator);
         return page.locator(locator);
     }

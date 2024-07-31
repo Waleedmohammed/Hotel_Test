@@ -9,8 +9,8 @@ public class
 UserMain {
     private UserActController act;
     private UserVerifyController verify;
+
     protected BasePage page;
-    protected int roomListCount;
 
     UserMain(BasePage page) {
         this.page = page;

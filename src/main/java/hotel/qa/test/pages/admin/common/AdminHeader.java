@@ -21,9 +21,9 @@ public class AdminHeader {
         this.verify = verify;
     }
 
-    protected  String roomsTabHrf= "#/admin/";
+    protected  String roomsTabHrf= "a.nav-link[href='#/admin/']";
 
-    protected String reportTab="id=createRoom";
+    protected String reportTab="id=reportLink";
 
     protected String brandingTab="id=brandingLink";
 
