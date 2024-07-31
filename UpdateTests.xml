@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
-<suite name="Update Room Test Suite" parallel="tests" thread-count="6">
+<suite name="Update Room Test Suite">
 
     <test  name="Update Tests">
         <classes>

@@ -16,7 +16,6 @@ import hotel.qa.test.pages.admin.login.AdminLogin;
 import hotel.qa.test.pages.admin.main.AdminMain;
 import hotel.qa.test.pages.admin.room.AdminRoom;
 import hotel.qa.test.pages.users.main.UserMain;
-import hotel.qa.test.utils.SelectedRoomOptions;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;

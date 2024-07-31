@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
-<suite name="Create Room Test Suite" parallel="tests" thread-count="6">
+<suite name="Create Room Test Suite">
 
     <test  name="Create Tests">
         <classes>
