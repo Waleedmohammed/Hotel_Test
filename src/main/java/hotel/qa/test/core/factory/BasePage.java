@@ -82,9 +82,10 @@ public abstract class BasePage {
     }
 
     public void clickOn(String locator) throws Exception {
+        await().atMost(10, TimeUnit.SECONDS).with().pollInterval(10, TimeUnit.MILLISECONDS)
+                .until(() -> page.locator(locator).isVisible());
+
         try {
-            await().atMost(5, TimeUnit.SECONDS).with().pollInterval(10, TimeUnit.MILLISECONDS)
-                    .until(() -> page.locator(locator).isVisible());
             page.locator(locator).click();
             log.info("Element located by " + locator + " is succesfully clicked");
         } catch (Exception e) {
@@ -95,9 +96,10 @@ public abstract class BasePage {
     }
 
     public void typeIn(String locator, String text) throws Exception {
+        await().atMost(10, TimeUnit.SECONDS).with().pollInterval(10, TimeUnit.MILLISECONDS)
+                .until(() -> page.locator(locator).isVisible());
+
         try {
-            await().atMost(5, TimeUnit.SECONDS).with().pollInterval(10, TimeUnit.MILLISECONDS)
-                    .until(() -> page.locator(locator).isVisible());
             page.locator(locator).fill(text);
             log.info("Entered value: " + text + " on element located by " + locator);
         } catch (Exception e) {
@@ -121,9 +123,10 @@ public abstract class BasePage {
     }
 
     public void selectFromDDL(String locator, String value) throws Exception {
+        await().atMost(10, TimeUnit.SECONDS).with().pollInterval(10, TimeUnit.MILLISECONDS)
+                .until(() -> page.locator(locator).isVisible());
+
         try {
-            await().atMost(5, TimeUnit.SECONDS).with().pollInterval(10, TimeUnit.MILLISECONDS)
-                    .until(() -> page.locator(locator).isVisible());
             page.selectOption(locator, value);
             log.info(value + " has been selected from DDL located by " + locator);
         } catch (Exception e) {
@@ -134,9 +137,9 @@ public abstract class BasePage {
     }
 
     public String getText(String locator) throws Exception {
+        await().atMost(10, TimeUnit.SECONDS).with().pollInterval(10, TimeUnit.MILLISECONDS)
+                .until(() -> page.locator(locator).isVisible());
         try {
-            await().atMost(5, TimeUnit.SECONDS).with().pollInterval(10, TimeUnit.MILLISECONDS)
-                    .until(() -> page.locator(locator).isVisible());
             String text = page.innerText(locator);
             log.info(text + " retrieved from Element located by " + locator);
             return text;
@@ -148,9 +151,10 @@ public abstract class BasePage {
     }
 
     public void check(String locator) throws Exception {
+        await().atMost(10, TimeUnit.SECONDS).with().pollInterval(10, TimeUnit.MILLISECONDS)
+                .until(() -> page.locator(locator).isVisible());
+
         try {
-            await().atMost(5, TimeUnit.SECONDS).with().pollInterval(10, TimeUnit.MILLISECONDS)
-                    .until(() -> page.locator(locator).isVisible());
             page.check(locator);
             log.info("Checkbox located by {} checked", locator);
         } catch (Exception e) {
@@ -187,7 +191,7 @@ public abstract class BasePage {
 
     public List<String> getAllAvailableOptionsFromUl(String ulLocator) {
 
-        await().atMost(5, TimeUnit.SECONDS).with().pollInterval(10, TimeUnit.MILLISECONDS)
+        await().atMost(10, TimeUnit.SECONDS).with().pollInterval(10, TimeUnit.MILLISECONDS)
                 .until(() -> page.locator(ulLocator).isVisible());
 
         List<String> listItems = new ArrayList<>();
@@ -207,7 +211,7 @@ public abstract class BasePage {
     }
 
     public Locator getElementLocatedBy(String locator) {
-        await().atMost(5, TimeUnit.SECONDS).with().pollInterval(10, TimeUnit.MILLISECONDS)
+        await().atMost(10, TimeUnit.SECONDS).with().pollInterval(10, TimeUnit.MILLISECONDS)
                 .until(() -> page.locator(locator).isVisible());
         log.info("Returning element located by {}", locator);
         return page.locator(locator);

@@ -22,8 +22,6 @@ public class AdminLogin {
         this.verify = verify;
     }
 
-    protected  String letMeHackBtn= "button.btn.btn-primary";
-
     protected  String userNameTxtBox= "id=username";
 
     protected  String passwordTxtBox= "id=password";

@@ -17,7 +17,6 @@ public class LoginActController extends AdminLogin {
     }
 
     public LoginActController login(String userName, String password) throws Exception {
-        page.clickOn(letMeHackBtn);
         page.typeIn(userNameTxtBox, userName);
         page.typeIn(passwordTxtBox, password);
         page.clickOn(loginBtn);
