@@ -2,14 +2,10 @@ package hotel.qa.test.core.factory;
 
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.LoadState;
-import com.microsoft.playwright.options.WaitForSelectorState;
 import hotel.qa.test.core.conf.BrowserProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.awaitility.Awaitility;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -64,23 +60,19 @@ public abstract class BasePage {
         if (page != null) {
             getPage().close();
             getBrowserContext().close();
+            getBrowser().close();
             getPlaywright().close();
             log.info("Page context closed");
+            tlPlaywright.remove();
+            tlBrowser.remove();
+            tlBrowserContext.remove();
+            tlPage.remove();
         }
     }
 
     public void navigate(String url) {
         page.navigate(url);
         log.info("opened {}", url);
-    }
-
-    public String takeScreenshot() {
-
-        String path = System.getProperty("user.dir") + "/Screenshots/" + System.currentTimeMillis() + ".png";
-        byte[] buffer = getPage().screenshot(new Page.ScreenshotOptions().setPath(Paths.get(path)).setFullPage(true));
-        String base64Path = Base64.getEncoder().encodeToString(buffer);
-
-        return base64Path;
     }
 
     public String getTitle() {
@@ -221,4 +213,12 @@ public abstract class BasePage {
         return page.locator(locator);
     }
 
+    public String takeScreenshot() {
+
+        String path = System.getProperty("user.dir") + "/Screenshots/" + System.currentTimeMillis() + ".png";
+        byte[] buffer = getPage().screenshot(new Page.ScreenshotOptions().setPath(Paths.get(path)).setFullPage(true));
+        String base64Path = Base64.getEncoder().encodeToString(buffer);
+
+        return base64Path;
+    }
 }
