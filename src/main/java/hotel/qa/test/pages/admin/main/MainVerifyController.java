@@ -34,8 +34,8 @@ public class MainVerifyController extends AdminMain {
 
         Assert.assertEquals(page.getElementLocatedBy(getRoomNumberLbl(expectedRoomNumber)).textContent(), expectedRoomNumber, "Room Number is not matching expected number");
         Assert.assertEquals(page.getElementLocatedBy(getRoomTypeLbl(roomId)).first().textContent(), expectedRoomType, "Room Type is not matching expected Type");
-        Assert.assertEquals(page.getElementLocatedBy(getRoomAccessibleLbl(roomId)).nth(1).textContent(), expectedRoomAccessible, "Room Accessible is not matching expected Accessible");
-        Assert.assertEquals(page.getElementLocatedBy(getRoomPriceLbl(expectedRoomPrice)).textContent(), expectedRoomPrice, "Room Price is not matching expected Price");
+        Assert.assertEquals(page.getElementLocatedBy(getRoomAccessibleLbl(roomId)).textContent(), expectedRoomAccessible, "Room Accessible is not matching expected Accessible");
+        Assert.assertEquals(page.getElementLocatedBy(getRoomPriceLbl(roomId,expectedRoomPrice)).textContent(), expectedRoomPrice, "Room Price is not matching expected Price");
         Assert.assertTrue(optionsItems.containsAll(SelectedRoomOptions.getSelectedOptions()),"Room Options is not matching expected Options");
         SelectedRoomOptions.clearSelectedOptionsList();
         return this;

@@ -22,7 +22,7 @@ public class AdminLogin {
         this.verify = verify;
     }
 
-    protected  String letMeHackBtn= "//button[@class='btn btn-primary']";
+    protected  String letMeHackBtn= "button.btn.btn-primary";
 
     protected  String userNameTxtBox= "id=username";
 

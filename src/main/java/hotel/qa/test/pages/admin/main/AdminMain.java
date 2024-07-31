@@ -29,7 +29,7 @@ AdminMain {
     }
 
 
-    protected String roomsList = "//div[@class='row detail']";
+    protected String roomsList = "[data-testid='roomlisting']";
 
     protected String roomNumTxtBox = "id=roomName";
 
@@ -53,7 +53,7 @@ AdminMain {
 
     protected String createRoomBtn = "id=createRoom";
 
-    protected String errorMessage = "//div[@class='alert alert-danger']/p";
+    protected String errorMessage = "div.alert.alert-danger p";
 
 
     public static AdminMain getMain(BasePage page) {
@@ -69,27 +69,27 @@ AdminMain {
     }
 
     protected String getRoomNumberLbl(String roomNumber) {
-        return "//p[@id='roomName" + roomNumber + "']";
+        return "p#roomName" + roomNumber;
     }
 
     protected String getRoomTypeLbl(String roomId) {
-        return "//div[@id='room" + roomId + "']/div[@class='col-sm-2']";
+        return "div[id='room" + roomId + "'] #typeFamily";
     }
 
     protected String getRoomAccessibleLbl(String roomId) {
-        return "//div[@id='room" + roomId + "']/div[@class='col-sm-2']";
+        return "div[id='room" + roomId + "'] #accessiblefalse";
     }
 
-    protected String getRoomPriceLbl(String roomNumber) {
-        return "//p[@id='roomPrice" + roomNumber + "']";
+    protected String getRoomPriceLbl(String roomId, String roomPrice) {
+        return "div[id='room" + roomId + "'] #roomPrice" + roomPrice;
     }
 
     protected String getRoomDetailsLbl(String roomId) {
-        return "//div[@id='room" + roomId + "']/div[@class='col-sm-5']/p";
+        return "div[id='room" + roomId + "'] div.col-sm-5";
     }
 
-    protected String getDeleteRoomIcon(String roomNumber) {
-        return "//span[@id='" + roomNumber + "']";
+    protected String getDeleteRoomIcon(String roomId) {
+        return "div[id='room" + roomId + "'] span.fa.fa-remove.roomDelete";
     }
 
     protected String getRoomSystemId(String roomNumber) {

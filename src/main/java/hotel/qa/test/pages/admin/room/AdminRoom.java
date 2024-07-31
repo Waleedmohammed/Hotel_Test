@@ -22,7 +22,7 @@ public class AdminRoom {
         this.verify = verify;
     }
 
-    protected  String editBtn= "//button[@class='btn btn-outline-primary float-right']";
+    protected  String editBtn= "button.btn.btn-outline-primary.float-right";
     protected String roomNumTxtBox = "id=roomName";
     protected String roomTypeDdl = "id=type";
     protected String roomAccessibleDdl = "id=accessible";
@@ -33,13 +33,12 @@ public class AdminRoom {
     protected String safeChBox = "id=safeCheckbox";
     protected String radioChBox = "id=radioCheckbox";
     protected String viewsChBox = "id=viewsCheckbox";
-    protected String createRoomBtn = "id=createRoom";
     protected String descriptionTxtBox = "id=description";
     protected String imageTxtBox = "id=image";
     protected String updateBtn = "id=update";
     protected String cancelBtn = "id=cancelEdit";
 
-    protected String errorMessage = "//div[@class='alert alert-danger']/p";
+    protected String errorMessage = "div.alert.alert-danger p";
 
 
     public static AdminRoom getRoom(BasePage page) {

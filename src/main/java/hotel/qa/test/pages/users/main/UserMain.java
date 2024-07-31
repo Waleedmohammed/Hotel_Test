@@ -23,9 +23,9 @@ UserMain {
         this.verify = verify;
     }
 
-    protected String logoImg = "//img[@class='hotel-logoUrl']";
+    protected String logoImg = "img.hotel-logoUrl";
 
-    protected String roomsList = "//img[@class='img-responsive hotel-img']";
+    protected String roomsList = "img.img-responsive.hotel-img";
 
 
     public static UserMain getUserMain(BasePage page) {
