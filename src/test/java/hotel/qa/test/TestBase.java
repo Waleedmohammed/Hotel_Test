@@ -1,10 +1,5 @@
 package hotel.qa.test;
 
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.Status;
-import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import com.aventstack.extentreports.reporter.configuration.Theme;
 import com.microsoft.playwright.Browser;
 import hotel.qa.test.core.conf.AppProperties;
 import hotel.qa.test.core.conf.BrowserProperties;
@@ -46,6 +41,7 @@ public abstract class TestBase extends AbstractTestNGSpringContextTests {
 
     @Autowired
     protected PageManager pageManager;
+
     protected BasePage basePage;
 
     protected AdminLogin adminLogin;
@@ -59,18 +55,7 @@ public abstract class TestBase extends AbstractTestNGSpringContextTests {
     protected AdminRoom adminRoom;
 
     Browser.NewContextOptions contextOptions;
-    public static ExtentTest logger;
-    public static ExtentReports report;
 
-
-    @BeforeTest
-    public void initReport() {
-        report = new ExtentReports();
-        ExtentSparkReporter spark = new ExtentSparkReporter("Report.html");
-        spark.config().setTheme(Theme.DARK);
-        spark.config().setDocumentTitle("Reqres Automation Testing Report");
-        report.attachReporter(spark);
-    }
 
     @BeforeMethod
     public void setUp(Method method) {
@@ -84,7 +69,6 @@ public abstract class TestBase extends AbstractTestNGSpringContextTests {
             contextOptions.setViewportSize((int) getCurrentScreenDimension().getWidth(), (int) getCurrentScreenDimension().getHeight());
 
         }
-        logger = report.createTest(method.getName());
         basePage = pageManager.getPage();
         basePage.start(contextOptions);
         basePage.navigate(appProperties.getAdminUrl());
@@ -98,22 +82,8 @@ public abstract class TestBase extends AbstractTestNGSpringContextTests {
             System.out.println("Taking Screenshot....");
             basePage.takeScreenshot();
         }
-        // log the test method's execution result. if it fails, log the assertion error
-        if (result.getStatus() == ITestResult.FAILURE) {
-            logger.log(Status.FAIL, result.getThrowable());
-        } else if (result.getStatus() == ITestResult.SUCCESS) {
-            logger.log(Status.PASS, method.getName());
-        } else if (result.getStatus() == ITestResult.SKIP) {
-            logger.log(Status.SKIP, method.getName());
-        }
         basePage.quit();
     }
-
-    @AfterTest
-    public void endReport() {
-        report.flush();
-    }
-
 
     private static Dimension getCurrentScreenDimension() {
         return Toolkit.getDefaultToolkit().getScreenSize();

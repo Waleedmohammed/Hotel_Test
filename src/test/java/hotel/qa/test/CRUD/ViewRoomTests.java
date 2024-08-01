@@ -4,6 +4,9 @@ import hotel.qa.test.TestBase;
 import hotel.qa.test.helper.TestHelpers;
 import hotel.qa.test.utils.RoomAccessible;
 import hotel.qa.test.utils.RoomType;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.testng.annotations.Test;
 
 
@@ -15,6 +18,9 @@ import static hotel.qa.test.pages.users.main.UserMain.getUserMain;
 public class ViewRoomTests extends TestBase {
 
     @Test
+    @Description("Test That Admin User Can view his created room successfully on main home page")
+    @Feature("View Room Feature")
+    @Story("View Room on main system page after got created by admin")
     public void test_admin_can_view_created_room_on_system() throws Exception {
 
         adminLogin = getLogin(basePage);

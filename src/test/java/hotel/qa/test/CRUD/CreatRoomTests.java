@@ -4,6 +4,7 @@ import hotel.qa.test.TestBase;
 import hotel.qa.test.helper.TestHelpers;
 import hotel.qa.test.utils.RoomAccessible;
 import hotel.qa.test.utils.RoomType;
+import io.qameta.allure.*;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 
@@ -17,6 +18,9 @@ public class CreatRoomTests extends TestBase {
 
 
     @Test
+    @Description("Test That Admin User Can add new room successfully")
+    @Feature("Create Room Feature")
+    @Story("Create Room with valid test data")
     public void test_create_room_by_admin() throws Exception {
 
         adminLogin = getLogin(basePage);
@@ -64,6 +68,9 @@ public class CreatRoomTests extends TestBase {
     }
 
     @Test
+    @Description("Test That Admin User Can not add new room without passing room number")
+    @Feature("Create Room Feature")
+    @Story("Create Room with empty room number")
     public void test_create_room_without_number() throws Exception {
 
         adminLogin = getLogin(basePage);
@@ -96,6 +103,9 @@ public class CreatRoomTests extends TestBase {
     }
 
     @Test
+    @Description("Test That Admin User Can not add new room without passing room price")
+    @Feature("Create Room Feature")
+    @Story("Create Room with empty room price")
     public void test_create_room_without_price() throws Exception {
 
         adminLogin = getLogin(basePage);

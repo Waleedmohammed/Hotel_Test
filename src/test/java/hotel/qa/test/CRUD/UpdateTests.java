@@ -4,6 +4,7 @@ import hotel.qa.test.TestBase;
 import hotel.qa.test.helper.TestHelpers;
 import hotel.qa.test.utils.RoomAccessible;
 import hotel.qa.test.utils.RoomType;
+import io.qameta.allure.*;
 import org.testng.annotations.Test;
 
 
@@ -16,6 +17,9 @@ import static hotel.qa.test.pages.users.main.UserMain.getUserMain;
 public class UpdateTests extends TestBase {
 
     @Test
+    @Description("Test That Admin User Can update existing room successfully")
+    @Feature("Update Room Feature")
+    @Story("Update Existing Room with valid test data")
     public void test_update_room_by_admin() throws Exception {
 
         adminLogin = getLogin(basePage);
@@ -92,6 +96,10 @@ public class UpdateTests extends TestBase {
 
 
     @Test
+    @Description("Test That Admin User should not update room with empty number")
+    @Severity(SeverityLevel.CRITICAL)
+    @Feature("Update Room Feature")
+    @Story("Update Room with empty number")
     public void test_update_room_by_admin_with_empty_room_number() throws Exception {
 
         adminLogin = getLogin(basePage);
@@ -139,6 +147,9 @@ public class UpdateTests extends TestBase {
     }
 
     @Test
+    @Description("Test That Admin User should not update room with empty price")
+    @Feature("Update Room Feature")
+    @Story("Update Room with empty price")
     public void test_update_room_by_admin_with_empty_room_price() throws Exception {
 
         adminLogin = getLogin(basePage);

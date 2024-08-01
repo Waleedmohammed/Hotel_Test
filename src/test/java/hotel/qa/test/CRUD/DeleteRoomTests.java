@@ -4,6 +4,9 @@ import hotel.qa.test.TestBase;
 import hotel.qa.test.helper.TestHelpers;
 import hotel.qa.test.utils.RoomAccessible;
 import hotel.qa.test.utils.RoomType;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.testng.annotations.Test;
 
 
@@ -15,6 +18,9 @@ import static hotel.qa.test.pages.users.main.UserMain.getUserMain;
 public class DeleteRoomTests extends TestBase {
 
     @Test
+    @Description("Test That Admin User Can delete new room successfully")
+    @Feature("Delete Room Feature")
+    @Story("Delete Existing Room")
     public void test_delete_room_by_admin() throws Exception {
 
         adminLogin = getLogin(basePage);
