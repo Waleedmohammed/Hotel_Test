@@ -28,18 +28,19 @@ public class DeleteRoomTests extends TestBase {
         adminMain = getMain(basePage);
         userMain = getUserMain(basePage);
 
+        // Perform success admin login
         adminLogin.act()
                 .login(appProperties.getAdminUser(), appProperties.getAdminPassword());
-
         adminLogin.verify()
                 .verifyAdminPageTitle(testProperties.getAppTitle());
-
         adminHeader.verify()
                 .verifyHeaderElementsIsVisible();
 
+        // Creating test data for roomNumber and roomPrice
         String roomNumber = TestHelpers.getRandomNumeric(3);
         String roomPrice = TestHelpers.getRandomNumeric(3);
 
+        // Execute create new room steps
         adminMain.act()
                 .typeRoomNumber(roomNumber)
                 .selectRoomType(RoomType.FAMILY.getRoomType())
@@ -50,15 +51,18 @@ public class DeleteRoomTests extends TestBase {
                 .checkRefreshmentCheckBox()
                 .clickCreateRoomButton();
 
+        // Verify that room created successfully and visible on available rooms list
         adminMain.verify()
                 .verifyCreatedRoomIsVisible(roomNumber,
                         RoomType.FAMILY.getRoomType(),
                         RoomAccessible.FALSE.getRoomAccessible(),
                         roomPrice);
 
+        // Delete created Room
         adminMain.act()
                 .clickDeleteRoomIcon(roomNumber);
 
+        // Verify that deleted room is not available in rooms list
         adminMain.verify()
                 .verifyDeletedRoomNumberIsNotVisible(roomNumber);
 

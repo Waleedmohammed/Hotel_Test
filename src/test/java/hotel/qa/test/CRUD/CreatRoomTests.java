@@ -28,7 +28,7 @@ public class CreatRoomTests extends TestBase {
         adminMain = getMain(basePage);
         userMain = getUserMain(basePage);
 
-        // Perform login & success login verifications step
+        // Perform success admin login
         adminLogin.act()
                 .login(appProperties.getAdminUser(), appProperties.getAdminPassword());
         adminLogin.verify()

@@ -2,7 +2,7 @@
 A framework designed to test the admin panel of the Hotel booking app
 
 * Needed Setup to run the tests:
-    * JAVA
+    * JAVA 17
     * MAVEN
 
 ## Table of Contents
@@ -15,16 +15,19 @@ A framework designed to test the admin panel of the Hotel booking app
 ### Installation
 
 1. Download and install Maven
-2. Download Intellij with Java JDK 17
+2. Download and install Java JDK 17
 3. Clone this Repo
+4. Build Project by running command ``` mvn clean install -Dmaven.test.skip=true  ```
 
 ## Features
 
-* This Project built with Java Spring boot Framework
+* This Project built with Java Spring boot Framework which support dependency injection
 * Used Playwright with Page Object Model Design has been used 
 * Visualized Reporting - Using allureReport
-* Tests built on Fluent Interface with Method chaining to build tests with Syntactic Sugar Language to achieve Domain Specific Language(DSL)
-* Tests can run with maven profiles option 
+* Tests built with the help of Fluent Interface Design Pattern with Method chaining to build tests with Syntactic Sugar Language to achieve Domain Specific Language(DSL)
+* Tests can run with maven profiles option
+* Support Testing for multi-language test cases . Just by adding new property file under src/main/resources directory and call it with your chosen maven spring active profile
+* Smart wait for element with the help of Awaitility Library (giving the chance to implement Fluent wait action) 
 
 ## Framework_Structure
 1. src/main/java/hotel/qa/test/core/conf
@@ -67,7 +70,7 @@ A framework designed to test the admin panel of the Hotel booking app
      When it is chrome , then you are choosing to run tests in chromium browser with english assertions (spring.profiles.group.chrome=chrome-test,en-test)
      When it is chrome , then you are choosing to run tests in firefox browser with english assertions (spring.profiles.group.firefox=firefox-test,en-test)
 
-4. Open IntelliJ terminal of OS terminal
+4. Open IntelliJ terminal
    
 5. CD to main directory of current repository
 
@@ -77,6 +80,7 @@ A framework designed to test the admin panel of the Hotel booking app
    ``` mvn clean test -Pdelete-tests ``` (Test will run with maven profile delete-tests , which will call tests in DeleteTests.xml)
    ``` mvn clean test -Pupdate-tests ``` (Test will run with maven profile update-tests , which will call tests in UpdateTests.xml)
    ``` mvn clean test -Pcreate-tests ``` (Test will run with maven profile create-tests , which will call tests in CreateTests.xml)
+   If you need to override spring active profile , run  ``` mvn clean test --activate-profiles=your prefered active profile (chrome/firefox) ```
 
 7. Run  ``` mvn allure:serve ``` to generate and browse Allure Report . It will be opened automatically
    

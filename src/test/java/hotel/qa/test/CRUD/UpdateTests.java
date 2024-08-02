@@ -28,7 +28,7 @@ public class UpdateTests extends TestBase {
         userMain = getUserMain(basePage);
         adminRoom = getRoom(basePage);
 
-        // Perform login & success login verifications step
+        // Perform success Admin login
         performSuccessAdminLogin(adminLogin, adminHeader);
 
         // Creating test data for roomNumber and roomPrice
@@ -49,12 +49,14 @@ public class UpdateTests extends TestBase {
                 .checkSafeCheckBox()
                 .clickCreateRoomButton();
 
+        // Verify that room created successfully and visible on available rooms list
         adminMain.verify()
                 .verifyCreatedRoomIsVisible(roomNumber,
                         RoomType.FAMILY.getRoomType(),
                         RoomAccessible.FALSE.getRoomAccessible(),
                         roomPrice);
 
+        // Click on created room to edit it
         adminMain.act()
                 .clickOnCreatedRoom(roomNumber);
 

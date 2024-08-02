@@ -28,19 +28,19 @@ public class ViewRoomTests extends TestBase {
         adminMain = getMain(basePage);
         userMain = getUserMain(basePage);
 
+        // Perform success admin login
         adminLogin.act()
                 .login(appProperties.getAdminUser(), appProperties.getAdminPassword());
-
         adminLogin.verify()
                 .verifyAdminPageTitle(testProperties.getAppTitle());
-
         adminHeader.verify()
                 .verifyHeaderElementsIsVisible();
 
+        // Creating test data for roomNumber and roomPrice
         String roomNumber = TestHelpers.getRandomNumeric(3);
         String roomPrice = TestHelpers.getRandomNumeric(3);
 
-
+        // Execute create new room steps
         adminMain.act()
                 .typeRoomNumber(roomNumber)
                 .selectRoomType(RoomType.FAMILY.getRoomType())
@@ -51,17 +51,20 @@ public class ViewRoomTests extends TestBase {
                 .checkRefreshmentCheckBox()
                 .clickCreateRoomButton();
 
+        // Navigate to main system page
         basePage.navigate(appProperties.getMainUrl());
 
         userMain.act()
                 .waitForHotelLogoLoad()
                 .getListOfVisibleRooms();
 
+        // Verify that created room by Admin is visible on system for users reservation
         userMain.verify()
                 .verifyRoomIsExistWithRoomNumber(roomNumber)
                 .verifyRoomIsExistWithType(RoomType.FAMILY.getRoomType())
                 .verifyRoomIsExistWithSelectedOptions();
 
+        // Go back to admin page to delete the room for test data cleanup
         basePage.navigate(appProperties.getAdminUrl());
 
         adminMain.act()
